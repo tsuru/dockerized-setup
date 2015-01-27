@@ -1,3 +1,3 @@
-# Dockerize tsuru deployment
+# dockerized setup for tsuru deployment
 
-## in construction
+## under construction
