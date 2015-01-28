@@ -1,4 +1,4 @@
-FROM tsuru/consul:latest
+FROM tsuru/base:latest
 MAINTAINER Wagner Souza <wagnersza@gmail.com>
 
 RUN         apt-get update && apt-get install -y redis-server
