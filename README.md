@@ -29,3 +29,9 @@ $ docker run -d --name mongodb -h mongodb -e JOIN_IP=$JOIN_IP -p 27017:27017 tsu
 ```bash
 $ docker run -d --name router -h router -e JOIN_IP=$JOIN_IP -p 80:8080 tsuru/router
 ```
+
+## Links
+
+https://www.consul.io/docs/index.html
+https://github.com/hashicorp/consul-template
+https://github.com/progrium/docker-consul
