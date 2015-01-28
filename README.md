@@ -11,11 +11,11 @@ $ docker run -d --name node1 -h node1 progrium/consul -server -bootstrap-expect 
 ```
 
 ```bash
-$ docker run -d -p 8400:8400 -p 8500:8500 -p 8600:53/udp --name node4 -h node4 progrium/consul -join $JOIN_IP
+$ JOIN_IP="$(docker inspect -f '{{.NetworkSettings.IPAddress}}' node1)"
 ```
 
 ```bash
-$ JOIN_IP="$(docker inspect -f '{{.NetworkSettings.IPAddress}}' node1)"
+$ docker run -d -p 8400:8400 -p 8500:8500 -p 8600:53/udp --name node2 -h node2 progrium/consul -join $JOIN_IP
 ```
 
 ```bash
