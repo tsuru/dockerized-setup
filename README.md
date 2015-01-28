@@ -32,6 +32,6 @@ $ docker run -d --name router -h router -e JOIN_IP=$JOIN_IP -p 80:8080 tsuru/rou
 
 ## Links
 
-https://www.consul.io/docs/index.html
-https://github.com/hashicorp/consul-template
-https://github.com/progrium/docker-consul
+https://www.consul.io/docs/index.html  
+https://github.com/hashicorp/consul-template  
+https://github.com/progrium/docker-consul  
