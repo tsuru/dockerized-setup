@@ -14,4 +14,4 @@ docker run -d --name redis -h redis -e JOIN_IP=$JOIN_IP -p 6379:6379 tsuru/redis
 
 docker run -d --name mongodb -h mongodb -e JOIN_IP=$JOIN_IP -p 27017:27017 tsuru/mongodb
 
-docker run -d --name router -h router -e JOIN_IP=$JOIN_IP -p 8080:80 tsuru/router
+docker run -d --name router -h router -e JOIN_IP=$JOIN_IP -p 80:8080 tsuru/router

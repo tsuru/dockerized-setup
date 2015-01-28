@@ -1,0 +1,17 @@
+{
+    "server": {
+        "accessLog": "/var/log/hipache/access.log",
+        "accessLogMode": "file",
+        "port": 80,
+        "workers": 5,
+        "maxSockets": 300,
+        "deadBackendTTL": 30,
+        "tcpTimeout": 30,
+        "retryOnError": 3,
+        "deadBackendOn500": true,
+        "httpKeepAlive": false
+    },
+
+    "driver": ["redis://{{key "service/redis/address"}}:{{key "service/redis/port"}}"]
+
+}
