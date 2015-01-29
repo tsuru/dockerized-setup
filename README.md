@@ -90,7 +90,7 @@ And the third host with an IP of 10.0.1.3:
 
 Gandalf first host
 
-	$ docker run -d -h tsuru-gandalf-node1 -v /data/api:/data/api \
+	$ docker run -d -h tsuru-gandalf-node1 -v /data/gandalf:/data/gandalf \
 	    -p 10.0.1.4:8300:8300 \
 	    -p 10.0.1.4:8301:8301 \
 	    -p 10.0.1.4:8301:8301/udp \
@@ -100,11 +100,11 @@ Gandalf first host
 	    -p 10.0.1.4:8500:8500 \
 	    -p 10.0.1.4:8081:8081 \
 	    -p 172.17.42.1:53:53/udp \
-	    -e CONSUL_ARGS="-advertise 10.0.1.4 -join 10.0.1.1" tsuru/api
+	    -e CONSUL_ARGS="-advertise 10.0.1.4 -join 10.0.1.1" tsuru/gandalf
 
 On the second host
 
-	$ docker run -d -h tsuru-api-node2 -v /data/api:/data/api \
+	$ docker run -d -h tsuru-gandalf-node2 -v /data/gandalf:/data/gandalf \
 	    -p 10.0.1.5:8300:8300 \
 	    -p 10.0.1.5:8301:8301 \
 	    -p 10.0.1.5:8301:8301/udp \
@@ -114,7 +114,7 @@ On the second host
 	    -p 10.0.1.5:8500:8500 \
 	    -p 10.0.1.5:8081:8081 \
 	    -p 172.17.42.1:53:53/udp \
-	    -e CONSUL_ARGS="-advertise 10.0.1.5 -join 10.0.1.1" tsuru/api
+	    -e CONSUL_ARGS="-advertise 10.0.1.5 -join 10.0.1.1" tsuru/gandalf
 
 ## Links
 
