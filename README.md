@@ -56,7 +56,7 @@ Assuming we're on a host with a private IP of 10.0.1.1 and the IP of docker brid
 	    -p 10.0.1.1:8500:8500 \
 	    -p 10.0.1.1:8080:8080 \
 	    -p 172.17.42.1:53:53/udp \
-	    tsuru/api -server -advertise 10.0.1.1 -bootstrap-expect 3
+	    -e CONSUL_ARGS="-server -bootstrap-expect 3" tsuru/api
 
 On the second host, we'd run the same thing, but passing a `-join` to the first node's IP. Let's say the private IP for this host is 10.0.1.2:
 
@@ -70,7 +70,7 @@ On the second host, we'd run the same thing, but passing a `-join` to the first 
 	    -p 10.0.1.2:8500:8500 \
 	    -p 10.0.1.2:8080:8080 \
 	    -p 172.17.42.1:53:53/udp \
-	    tsuru/api -server -advertise 10.0.1.2 -join 10.0.1.1
+	    -e CONSUL_ARGS="-server -advertise 10.0.1.2 -join 10.0.1.1" tsuru/api
 
 And the third host with an IP of 10.0.1.3:
 
@@ -84,7 +84,7 @@ And the third host with an IP of 10.0.1.3:
 	    -p 10.0.1.3:8500:8500 \
 	    -p 10.0.1.3:8080:8080 \
 	    -p 172.17.42.1:53:53/udp \
-	    progrium/consul -server -advertise 10.0.1.3 -join 10.0.1.1
+	    -e CONSUL_ARGS="-server -advertise 10.0.1.3 -join 10.0.1.1" tsuru/api
 
 ## Links
 
