@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y gandalf-server
 EXPOSE 8081
 
 VOLUME	/data/gandalf
-ADD ./gandalf.ctmpl /tmp/gandalf.ctmpl
+
 ADD ./config /config/
 ADD ./gandalf.ctmpl /tmp/gandalf.ctmpl
 ADD ./gandalf /etc/init.d/gandalf
