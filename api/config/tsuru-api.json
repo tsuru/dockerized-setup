@@ -1,0 +1,9 @@
+{
+    "service": {
+        "name": "tsuru-api",
+        "tags": [
+            "api"
+        ],
+        "port": 8080
+    }
+}

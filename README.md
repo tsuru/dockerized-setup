@@ -34,6 +34,10 @@ $ docker run -d --name router -h router -e JOIN_IP=$JOIN_IP -p 80:8080 tsuru/rou
 $ docker run -d --name gandalf -h gandalf -e JOIN_IP=$JOIN_IP -p 8081:8081 tsuru/gandalf
 ```
 
+```bash
+$ docker run -d --name tsuru-api -h tsuru-api -e JOIN_IP=$JOIN_IP -p 8080:8080 tsuru/api
+```
+
 ## Links
 
 https://www.consul.io/docs/index.html  
