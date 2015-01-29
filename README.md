@@ -98,7 +98,7 @@ Gandalf first host
 	    -p 10.0.1.4:8302:8302/udp \
 	    -p 10.0.1.4:8400:8400 \
 	    -p 10.0.1.4:8500:8500 \
-	    -p 10.0.1.4:8080:8080 \
+	    -p 10.0.1.4:8081:8081 \
 	    -p 172.17.42.1:53:53/udp \
 	    -e CONSUL_ARGS="-advertise 10.0.1.4 -join 10.0.1.1" tsuru/api
 
@@ -115,20 +115,6 @@ On the second host
 	    -p 10.0.1.5:8081:8081 \
 	    -p 172.17.42.1:53:53/udp \
 	    -e CONSUL_ARGS="-advertise 10.0.1.5 -join 10.0.1.1" tsuru/api
-
-And the third host with an IP of 10.0.1.3:
-
-	$ docker run -d -h tsuru-api-node3 -v /data/api:/data/api \
-	    -p 10.0.1.3:8300:8300 \
-	    -p 10.0.1.3:8301:8301 \
-	    -p 10.0.1.3:8301:8301/udp \
-	    -p 10.0.1.3:8302:8302 \
-	    -p 10.0.1.3:8302:8302/udp \
-	    -p 10.0.1.3:8400:8400 \
-	    -p 10.0.1.3:8500:8500 \
-	    -p 10.0.1.3:8081:8081 \
-	    -p 172.17.42.1:53:53/udp \
-	    -e CONSUL_ARGS="-server -advertise 10.0.1.3 -join 10.0.1.1" tsuru/api
 
 ## Links
 
