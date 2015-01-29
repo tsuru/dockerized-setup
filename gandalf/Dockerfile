@@ -4,9 +4,14 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys B0DE9C5DEB
 RUN echo deb http://ppa.launchpad.net/tsuru/ppa/ubuntu trusty main  > /etc/apt/sources.list.d/tsuru.list
 RUN apt-get update && apt-get install -y gandalf-server
 
+EXPOSE 8081
+
 VOLUME	/data/gandalf
 ADD ./gandalf.ctmpl /tmp/gandalf.ctmpl
+ADD ./config /config/
+ADD ./gandalf.ctmpl /tmp/gandalf.ctmpl
+ADD ./gandalf /etc/init.d/gandalf
+RUN chmod +x /etc/init.d/gandalf
+ADD ./circus.ini /tmp/circus.ini
 
-EXPOSE 8080 8300 8301 8301/udp 8302 8302/udp 8400 8500 53/udp
-
-ENTRYPOINT ["/bin/start"]
+ENTRYPOINT /tmp/circus/bin/circusd /tmp/circus.ini

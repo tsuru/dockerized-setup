@@ -30,6 +30,10 @@ $ docker run -d --name mongodb -h mongodb -e JOIN_IP=$JOIN_IP -p 27017:27017 tsu
 $ docker run -d --name router -h router -e JOIN_IP=$JOIN_IP -p 80:8080 tsuru/router
 ```
 
+```bash
+$ docker run -d --name gandalf -h gandalf -e JOIN_IP=$JOIN_IP -p 8081:8081 tsuru/gandalf
+```
+
 ## Links
 
 https://www.consul.io/docs/index.html  
