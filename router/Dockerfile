@@ -5,6 +5,8 @@ RUN echo deb http://ppa.launchpad.net/tsuru/ppa/ubuntu trusty main  > /etc/apt/s
 RUN apt-get update && apt-get install -y node-hipache
 EXPOSE      8080
 
+VOLUME	/data/router
+
 ADD ./config /config/
 ADD ./hipache.ctmpl /tmp/hipache.ctmpl
 ADD ./hipache /etc/init.d/hipache
