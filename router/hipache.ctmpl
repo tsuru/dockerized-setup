@@ -1,17 +1,19 @@
 {
-    "server": {
-        "accessLog": "/var/log/hipache/access.log",
-        "accessLogMode": "file",
-        "port": 80,
+    "server": { {{range ls "service/router"}}
+        "{{.Key}}": "{{.Value}}"{{else}}
+        "accessLog": "/data/router/access_log",
+        "accessLogMode": "syslog",
+        "port": 8080,
         "workers": 5,
-        "maxSockets": 300,
+        "maxSockets": 100,
         "deadBackendTTL": 30,
         "tcpTimeout": 30,
-        "retryOnError": 3,
-        "deadBackendOn500": true,
-        "httpKeepAlive": false
+        "httpKeepAlive": true{{end}}
     },
-
-    "driver": ["redis://{{key "service/redis/address"}}:{{key "service/redis/port"}}"]
-
+    "redisHost": "127.0.0.1",
+    "redisPort": 6379,
+    "redisMasterHost": {{range service "redis"}}{{$service:=.Name}}{{range .Tags}}{{if eq . "master" }}{{range service $service}}"{{.Address}}"{{end}}{{end}}{{end}}{{end}},
+    "redisMasterPort": {{range service "redis"}}{{$service:=.Name}}{{range .Tags}}{{if eq . "master" }}{{range service $service}}{{.Port}}{{end}}{{end}}{{end}}{{end}}
 }
+
+
