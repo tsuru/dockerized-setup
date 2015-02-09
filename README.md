@@ -44,77 +44,77 @@ Setting up a real cluster on separate hosts is very similar to our single host c
 
 ### Running tsuru API
 
-Assuming we're on a host with a private IP of 10.0.1.1 and the IP of docker bridge docker0 is 172.17.42.1 we can start the first host agent:
+Assuming we're on a host with a private IP of 192.168.33.11 and the IP of docker bridge docker0 is 172.17.42.1 we can start the first host agent:
 
 	$ docker run -d -h tsuru-api-node1 -v /data/api:/data/api \
-	    -p 10.0.1.1:8300:8300 \
-	    -p 10.0.1.1:8301:8301 \
-	    -p 10.0.1.1:8301:8301/udp \
-	    -p 10.0.1.1:8302:8302 \
-	    -p 10.0.1.1:8302:8302/udp \
-	    -p 10.0.1.1:8400:8400 \
-	    -p 10.0.1.1:8500:8500 \
-	    -p 10.0.1.1:8080:8080 \
+	    -p 192.168.33.11:8300:8300 \
+	    -p 192.168.33.11:8301:8301 \
+	    -p 192.168.33.11:8301:8301/udp \
+	    -p 192.168.33.11:8302:8302 \
+	    -p 192.168.33.11:8302:8302/udp \
+	    -p 192.168.33.11:8400:8400 \
+	    -p 192.168.33.11:8500:8500 \
+	    -p 192.168.33.11:8080:8080 \
 	    -p 172.17.42.1:53:53/udp \
 	    -e CONSUL_ARGS="-server -bootstrap-expect 3" tsuru/api
 
-On the second host, we'd run the same thing, but passing a `-join` to the first node's IP. Let's say the private IP for this host is 10.0.1.2:
+On the second host, we'd run the same thing, but passing a `-join` to the first node's IP. Let's say the private IP for this host is 192.168.33.12:
 
 	$ docker run -d -h tsuru-api-node2 -v /data/api:/data/api \
-	    -p 10.0.1.2:8300:8300 \
-	    -p 10.0.1.2:8301:8301 \
-	    -p 10.0.1.2:8301:8301/udp \
-	    -p 10.0.1.2:8302:8302 \
-	    -p 10.0.1.2:8302:8302/udp \
-	    -p 10.0.1.2:8400:8400 \
-	    -p 10.0.1.2:8500:8500 \
-	    -p 10.0.1.2:8080:8080 \
+	    -p 192.168.33.12:8300:8300 \
+	    -p 192.168.33.12:8301:8301 \
+	    -p 192.168.33.12:8301:8301/udp \
+	    -p 192.168.33.12:8302:8302 \
+	    -p 192.168.33.12:8302:8302/udp \
+	    -p 192.168.33.12:8400:8400 \
+	    -p 192.168.33.12:8500:8500 \
+	    -p 192.168.33.12:8080:8080 \
 	    -p 172.17.42.1:53:53/udp \
-	    -e CONSUL_ARGS="-server -advertise 10.0.1.2 -join 10.0.1.1" tsuru/api
+	    -e CONSUL_ARGS="-server -advertise 192.168.33.12" tsuru/api
 
-And the third host with an IP of 10.0.1.3:
+And the third host with an IP of 192.168.33.13:
 
 	$ docker run -d -h tsuru-api-node3 -v /data/api:/data/api \
-	    -p 10.0.1.3:8300:8300 \
-	    -p 10.0.1.3:8301:8301 \
-	    -p 10.0.1.3:8301:8301/udp \
-	    -p 10.0.1.3:8302:8302 \
-	    -p 10.0.1.3:8302:8302/udp \
-	    -p 10.0.1.3:8400:8400 \
-	    -p 10.0.1.3:8500:8500 \
-	    -p 10.0.1.3:8080:8080 \
+	    -p 192.168.33.13:8300:8300 \
+	    -p 192.168.33.13:8301:8301 \
+	    -p 192.168.33.13:8301:8301/udp \
+	    -p 192.168.33.13:8302:8302 \
+	    -p 192.168.33.13:8302:8302/udp \
+	    -p 192.168.33.13:8400:8400 \
+	    -p 192.168.33.13:8500:8500 \
+	    -p 192.168.33.13:8080:8080 \
 	    -p 172.17.42.1:53:53/udp \
-	    -e CONSUL_ARGS="-server -advertise 10.0.1.3 -join 10.0.1.1" tsuru/api
+	    -e CONSUL_ARGS="-server -advertise 192.168.33.13" tsuru/api
 
 ### Running gandalf
 
 Gandalf first host
 
 	$ docker run -d -h tsuru-gandalf-node1 -v /data/gandalf:/data/gandalf \
-	    -p 10.0.1.4:8300:8300 \
-	    -p 10.0.1.4:8301:8301 \
-	    -p 10.0.1.4:8301:8301/udp \
-	    -p 10.0.1.4:8302:8302 \
-	    -p 10.0.1.4:8302:8302/udp \
-	    -p 10.0.1.4:8400:8400 \
-	    -p 10.0.1.4:8500:8500 \
-	    -p 10.0.1.4:8081:8081 \
+	    -p 192.168.33.14:8300:8300 \
+	    -p 192.168.33.14:8301:8301 \
+	    -p 192.168.33.14:8301:8301/udp \
+	    -p 192.168.33.14:8302:8302 \
+	    -p 192.168.33.14:8302:8302/udp \
+	    -p 192.168.33.14:8400:8400 \
+	    -p 192.168.33.14:8500:8500 \
+	    -p 192.168.33.14:8081:8081 \
 	    -p 172.17.42.1:53:53/udp \
-	    -e CONSUL_ARGS="-advertise 10.0.1.4 -join 10.0.1.1" tsuru/gandalf
+	    -e CONSUL_ARGS="-advertise 192.168.33.14" tsuru/gandalf
 
 On the second host
 
 	$ docker run -d -h tsuru-gandalf-node2 -v /data/gandalf:/data/gandalf \
-	    -p 10.0.1.5:8300:8300 \
-	    -p 10.0.1.5:8301:8301 \
-	    -p 10.0.1.5:8301:8301/udp \
-	    -p 10.0.1.5:8302:8302 \
-	    -p 10.0.1.5:8302:8302/udp \
-	    -p 10.0.1.5:8400:8400 \
-	    -p 10.0.1.5:8500:8500 \
-	    -p 10.0.1.5:8081:8081 \
+	    -p 192.168.33.15:8300:8300 \
+	    -p 192.168.33.15:8301:8301 \
+	    -p 192.168.33.15:8301:8301/udp \
+	    -p 192.168.33.15:8302:8302 \
+	    -p 192.168.33.15:8302:8302/udp \
+	    -p 192.168.33.15:8400:8400 \
+	    -p 192.168.33.15:8500:8500 \
+	    -p 192.168.33.15:8081:8081 \
 	    -p 172.17.42.1:53:53/udp \
-	    -e CONSUL_ARGS="-advertise 10.0.1.5 -join 10.0.1.1" tsuru/gandalf
+	    -e CONSUL_ARGS="-advertise 192.168.33.15" tsuru/gandalf
 
 ## Links
 
