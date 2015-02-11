@@ -70,7 +70,7 @@ On the second host, we'd run the same thing, but passing a `-join` to the first 
         -p 192.168.33.12:8500:8500 \
         -p 192.168.33.12:8080:8080 \
         -p 172.17.42.1:53:53/udp \
-        -e CONSUL_ARGS="-server -advertise 192.168.33.12" tsuru/api
+        -e CONSUL_ARGS="-server -advertise 192.168.33.12 -join 192.168.33.11" tsuru/api
 
 And the third host with an IP of 192.168.33.13:
 
@@ -84,7 +84,7 @@ And the third host with an IP of 192.168.33.13:
         -p 192.168.33.13:8500:8500 \
         -p 192.168.33.13:8080:8080 \
         -p 172.17.42.1:53:53/udp \
-        -e CONSUL_ARGS="-server -advertise 192.168.33.13" tsuru/api
+        -e CONSUL_ARGS="-server -advertise 192.168.33.13 -join 192.168.33.11" tsuru/api
 
 ### Running gandalf
 
