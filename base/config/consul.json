@@ -1,6 +1,7 @@
 {
 	"data_dir": "/data",
 	"ui_dir": "/ui",
+	"domain": "tsuru",
 	"client_addr": "0.0.0.0",
 	"ports": {
 		"dns": 53
