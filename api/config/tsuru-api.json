@@ -1,6 +1,6 @@
 {
     "service": {
-        "name": "tsuru-api",
+        "name": "api",
         "tags": [
             "api"
         ],
