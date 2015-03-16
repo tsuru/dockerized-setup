@@ -1,3 +1,6 @@
+{{range ls "service/mongodb"}}
+{{.Value}}
+{{else}}
 # mongodb.conf
 
 # Where to store the data.
@@ -98,3 +101,5 @@ journal=true
 # SSL Key file and password
 #sslPEMKeyFile = /etc/ssl/mongodb.pem
 #sslPEMKeyPassword = pass
+
+{{end}}

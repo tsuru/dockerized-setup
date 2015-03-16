@@ -1,3 +1,6 @@
+{{range ls "service/gandalf"}}
+{{.Value}}
+{{else}}
 bin-path: /usr/bin/gandalf-ssh
 
 # MongoDB connection settings. By default, Gandalf will connect on localhost
@@ -35,3 +38,4 @@ bind: localhost:8000
 
 # User that manages repositories in the file system.
 uid: git
+{{end}}

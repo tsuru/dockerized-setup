@@ -1,3 +1,6 @@
+{{range ls "service/redis"}}
+{{.Value}}
+{{else}}
 # Redis configuration file example
 
 # Note on units: when memory size is needed, it is possible to specify
@@ -705,3 +708,6 @@ hz 10
 # in order to commit the file to the disk more incrementally and avoid
 # big latency spikes.
 aof-rewrite-incremental-fsync yes
+
+{{end}}
+
