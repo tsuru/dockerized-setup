@@ -10,27 +10,27 @@ This project is a Docker container for [tsuru](https://tsuru.io) with [Consul](h
 If you just want to run a single instance of tsuru to try out its functionality:
 
 ```bash
-$ docker run -d --name redis -h redis -e JOIN_IP=$JOIN_IP -p 6379:6379 -p 8400:8400 -p 8500:8500 -p 8600:53/udp -e CONSUL_ARGS="-server -bootstrap-expect 3" tsuru/redis
+$ docker run -d --name api -h api -e CONSUL_ARGS="-server -bootstrap-expect 3" -p 8400:8400 -p 8500:8500 -p 53:53/udp tsuru/api
 ```
 
 ```bash
-$ JOIN_IP="$(docker inspect -f '{{.NetworkSettings.IPAddress}}' redis)"
+$ JOIN_IP="$(docker inspect -f '{{.NetworkSettings.IPAddress}}' api)"
 ```
 
 ```bash
-$ docker run -d --name mongodb -h mongodb -e CONSUL_ARGS="-server -join $JOIN_IP" -e JOIN_IP=$JOIN_IP -p 27017:27017 tsuru/mongodb
+$ docker run -d --name redis -h redis -e CONSUL_ARGS="-server -join $JOIN_IP" tsuru/redis
 ```
 
 ```bash
-$ docker run -d --name router -h router -e JOIN_IP=$JOIN_IP -e CONSUL_ARGS="-server -join $JOIN_IP" -p 80:8080 tsuru/router
+$ docker run -d --name mongodb -h mongodb -e CONSUL_ARGS="-server -join $JOIN_IP" tsuru/mongodb
 ```
 
 ```bash
-$ docker run -d --name gandalf -h gandalf -e JOIN_IP=$JOIN_IP -e CONSUL_ARGS="-join $JOIN_IP" -p 8081:8081 tsuru/gandalf
+$ docker run -d --name router -h router -e CONSUL_ARGS="-join $JOIN_IP" tsuru/router
 ```
 
 ```bash
-$ docker run -d --name tsuru-api -h tsuru-api -e JOIN_IP=$JOIN_IP -e CONSUL_ARGS="-join $JOIN_IP" -p 8080:8080 tsuru/api
+$ docker run -d --name gandalf -h gandalf -e CONSUL_ARGS="-join $JOIN_IP" tsuru/gandalf
 ```
 
 ## Running a real tsuru cluster in a production environment
