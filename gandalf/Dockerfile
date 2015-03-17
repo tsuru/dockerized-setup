@@ -4,7 +4,7 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys B0DE9C5DEB
 RUN echo deb http://ppa.launchpad.net/tsuru/ppa/ubuntu trusty main  > /etc/apt/sources.list.d/tsuru.list
 RUN apt-get update && apt-get install -y gandalf-server
 
-EXPOSE 8081
+EXPOSE 8000
 
 VOLUME	/data/gandalf
 
