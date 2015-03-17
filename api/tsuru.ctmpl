@@ -1,15 +1,43 @@
-{{range ls "service/router"}}
+{{range ls "service/api"}}
 {{.Value}}
 {{else}}
 listen: "0.0.0.0:8080"
-admin-listen: "0.0.0.0:8081"
-
-host: http://localhost:8080
-
+host: http://{{env "HOST_IP"}}:8080
+debug: true
+admin-team: admin
+database:
+  url: {{range service "mongodb"}}{{.Address}}:{{.Port}}{{end}}
+  name: tsurudb
 git:
   unit-repo: /home/application/current
-  api-server: http://127.0.0.1:8000
-  rw-host: my.gandalf.domain
-  ro-host: 10.10.10.10
+  api-server: {{range service "gandalf"}}{{.Address}}:{{.Port}}{{end}}
+auth:
+  user-registration: true
+  scheme: native
+repo-manager: gandalf
+provisioner: docker
+hipache:
+  domain: {{env "HOST_IP"}}.nip.io
+queue: redis
+redis-queue:
+  host: {{range service "redis"}}{{$service:=.Name}}{{range .Tags}}{{if eq . "master" }}{{range service $service}}{{.Address}}:{{.Port}}{{end}}{{end}}{{end}}{{end}}
+  port: 6379
+docker:
+  collection: docker_containers
+  registry: {{range service "registry"}}{{.Address}}:{{.Port}}{{end}}
+  repository-namespace: tsuru
+  router: hipache
+  deploy-cmd: /var/lib/tsuru/deploy
+  segregate: true
+  cluster:
+    storage: mongodb
+    mongo-url: {{range service "mongodb"}}{{.Address}}:{{.Port}}{{end}}
+    mongo-database: dockercluster
+  run-cmd:
+    bin: /var/lib/tsuru/start
+    port: "8888"
+  ssh:
+    add-key-cmd: /var/lib/tsuru/add-key
+    user: ubuntu
 
 {{end}}
