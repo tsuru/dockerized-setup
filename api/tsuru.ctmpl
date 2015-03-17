@@ -1,9 +1,8 @@
-{{range ls "service/api"}}
-{{.Value}}
-{{else}}
+{{range ls "service/api"}}{{.Value}}{{else}}
 listen: "0.0.0.0:8080"
 host: http://{{env "HOST_IP"}}:8080
-debug: true
+debug: false
+log: /var/log/tsuru.log
 admin-team: admin
 database:
   url: {{range service "mongodb"}}{{.Address}}:{{.Port}}{{end}}
@@ -39,5 +38,4 @@ docker:
   ssh:
     add-key-cmd: /var/lib/tsuru/add-key
     user: ubuntu
-
 {{end}}
