@@ -7,13 +7,9 @@ admin-team: admin
 database:
   url: {{range service "mongodb"}}{{.Address}}:{{.Port}}{{end}}
   name: tsurudb
-git:
-  unit-repo: /home/application/current
-  api-server: {{range service "gandalf"}}{{.Address}}:{{.Port}}{{end}}
 auth:
   user-registration: true
   scheme: native
-repo-manager: gandalf
 provisioner: docker
 hipache:
   domain: {{env "HOST_IP"}}.nip.io
