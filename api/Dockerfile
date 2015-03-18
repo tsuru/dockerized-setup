@@ -8,6 +8,7 @@ EXPOSE      8080
 
 VOLUME	/data/api
 
+ADD ./tsuru-defaults /etc/default/tsuru-server
 ADD ./config /config/
 ADD ./tsuru.ctmpl /tmp/tsuru.ctmpl
 ADD ./tsuru-server-api /etc/init.d/tsuru-server-api
