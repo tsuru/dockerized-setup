@@ -2,7 +2,8 @@
 listen: "0.0.0.0:8080"
 host: http://{{env "HOST_IP"}}:8080
 debug: false
-log: /var/log/tsuru.log
+log:
+  file: /var/log/tsuru.log
 admin-team: admin
 database:
   url: {{range service "mongodb"}}{{.Address}}:{{.Port}}{{end}}

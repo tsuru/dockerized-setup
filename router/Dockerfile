@@ -13,4 +13,4 @@ ADD ./hipache /etc/init.d/hipache
 RUN chmod +x /etc/init.d/hipache
 ADD ./circus.ini /tmp/circus.ini
 
-ENTRYPOINT /tmp/circus/bin/circusd /tmp/circus.ini
+ENTRYPOINT /tmp/circus/bin/circusd /tmp/circus.ini --log-output /var/log/circus.log

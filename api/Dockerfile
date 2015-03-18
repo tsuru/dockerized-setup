@@ -15,4 +15,4 @@ ADD ./tsuru-server-api /etc/init.d/tsuru-server-api
 RUN chmod +x /etc/init.d/tsuru-server-api
 ADD ./circus.ini /tmp/circus.ini
 
-ENTRYPOINT /tmp/circus/bin/circusd /tmp/circus.ini
+ENTRYPOINT /tmp/circus/bin/circusd /tmp/circus.ini --log-output /var/log/circus.log

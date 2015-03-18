@@ -11,4 +11,4 @@ ADD ./redis-server /etc/init.d/redis-server
 RUN chmod +x /etc/init.d/redis-server
 ADD ./circus.ini /tmp/circus.ini
 
-ENTRYPOINT /tmp/circus/bin/circusd /tmp/circus.ini
+ENTRYPOINT /tmp/circus/bin/circusd /tmp/circus.ini --log-output /var/log/circus.log

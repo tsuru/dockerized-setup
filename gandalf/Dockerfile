@@ -14,4 +14,4 @@ ADD ./gandalf /etc/init.d/gandalf
 RUN chmod +x /etc/init.d/gandalf
 ADD ./circus.ini /tmp/circus.ini
 
-ENTRYPOINT /tmp/circus/bin/circusd /tmp/circus.ini
+ENTRYPOINT /tmp/circus/bin/circusd /tmp/circus.ini --log-output /var/log/circus.log
