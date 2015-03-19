@@ -10,7 +10,7 @@ This project is a Docker container for [tsuru](https://tsuru.io) with [Consul](h
 If you just want to run a single instance of tsuru to try out its functionality:
 
 ```bash
-$ docker run -d --name api -h api -e CONSUL_ARGS="-server -bootstrap-expect 3" -e HOST_IP="192.168.99.100" -p 8400:8400 -p 8500:8500 -p 53:53/udp tsuru/api
+$ docker run -d --name api -h api -e CONSUL_ARGS="-server -bootstrap-expect 3" -e HOST_IP="192.168.99.100" -p 8400:8400 -p 8500:8500 -p 8080:8080 -p 53:53/udp tsuru/api
 ```
 
 ```bash
