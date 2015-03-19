@@ -5,7 +5,7 @@
     "server": { {{range ls "service/router"}}
         "{{.Key}}": "{{.Value}}"{{else}}
         "accessLog": "/data/router/access_log",
-        "accessLogMode": "syslog",
+        "accessLogMode": "file",
         "port": 8080,
         "workers": 5,
         "maxSockets": 100,
