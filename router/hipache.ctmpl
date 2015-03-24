@@ -13,7 +13,7 @@
         "tcpTimeout": 30,
         "httpKeepAlive": true{{end}}
     },
-    "redisHost": "127.0.0.1",
+    "redisHost": {{range service "redis"}}{{$service:=.Name}}{{range .Tags}}{{if eq . "master" }}{{range service $service}}"{{.Address}}"{{end}}{{end}}{{end}}{{end}},
     "redisPort": 6379,
     "redisMasterHost": {{range service "redis"}}{{$service:=.Name}}{{range .Tags}}{{if eq . "master" }}{{range service $service}}"{{.Address}}"{{end}}{{end}}{{end}}{{end}},
     "redisMasterPort": {{range service "redis"}}{{$service:=.Name}}{{range .Tags}}{{if eq . "master" }}{{range service $service}}{{.Port}}{{end}}{{end}}{{end}}{{end}}
