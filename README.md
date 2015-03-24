@@ -10,7 +10,7 @@ This project is a Docker container for [tsuru](https://tsuru.io) with [Consul](h
 If you just want to run a single instance of tsuru to try out its functionality:
 
 ```bash
-$ docker run -d --name api -h api -e CONSUL_ARGS="-server -bootstrap-expect 3" -e HOST_IP="192.168.99.100" -p 8400:8400 -p 8500:8500 -p 8080:8080 -p 53:53/udp tsuru/api
+$ docker run -d --name api -h api -e CONSUL_ARGS="-server -bootstrap-expect 3" -e HOST_IP="10.25.43.22" -p 8400:8400 -p 8500:8500 -p 8080:8080 -p 53:53/udp tsuru/api
 ```
 
 ```bash
@@ -31,6 +31,10 @@ $ docker run -d --name router -h router -p 80:8080 -e CONSUL_ARGS="-join $JOIN_I
 
 ```bash
 $ docker run -d --name gandalf -h gandalf -e CONSUL_ARGS="-join $JOIN_IP" tsuru/gandalf
+```
+
+```bash
+docker run -d --name registry -h registry -p 5000:5000 -e CONSUL_ARGS="-join $JOIN_IP" tsuru/registry
 ```
 
 ## Running a real tsuru cluster in a production environment
