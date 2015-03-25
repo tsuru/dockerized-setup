@@ -6,9 +6,9 @@
 
 # Constraints
 
-    * needs to be OS agnostic
-    * host needs to depend only on docker
-    * ...
+   * needs to be OS agnostic
+   * host needs to depend only on docker
+   * ...
 
 
 ## Consul approach
