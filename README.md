@@ -15,14 +15,6 @@
 
 This project is a Docker container for [tsuru](https://tsuru.io) with [Consul](http://www.consul.io/). It's a slightly opinionated, pre-configured tsuru with Consul Agent made specifically to work in the Docker ecosystem.
 
-
-## Docker Instalation (now for ubuntu only)
-
-$ curl -sSL https://get.docker.com/ubuntu/ |sh +
-
-$ echo "DOCKER_OPTS=‘-H tcp://0.0.0.0:2375 --insecure-registry=10.25.43.22:5000 --dns 172.17.42.1 --dns 8.8.8.8 --dns-search service.tsuru'" >> /etc/default/docker
-
-
 ## Just trying out tsuru
 
 If you just want to run a single instance of tsuru to try out its functionality:
