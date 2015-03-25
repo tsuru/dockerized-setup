@@ -27,6 +27,8 @@ $ echo "DOCKER_OPTS=‘-H tcp://0.0.0.0:2375 --insecure-registry 192.168.0.0/16 
 $ restart docker
 ```
 
+Start tsuru api
+
 ```bash
 $ docker run -d --name api -h api -e CONSUL_ARGS="-server -bootstrap" -e HOST_IP="10.25.43.22" -p 8400:8400 -p 8500:8500 -p 8080:8080 -p 53:53/udp tsuru/api
 ```
