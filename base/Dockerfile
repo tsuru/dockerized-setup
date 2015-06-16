@@ -4,17 +4,17 @@ MAINTAINER 	Wagner Souza <wagnersza@gmail.com>
 RUN apt-get update
 RUN apt-get install -y unzip libzmq-dev libevent-dev python-dev python-virtualenv
 
-ADD https://dl.bintray.com/mitchellh/consul/0.4.1_linux_amd64.zip /tmp/consul.zip
+ADD https://dl.bintray.com/mitchellh/consul/0.5.2_linux_amd64.zip /tmp/consul.zip
 RUN cd /bin && unzip /tmp/consul.zip && chmod +x /bin/consul && rm /tmp/consul.zip
 
-ADD https://dl.bintray.com/mitchellh/consul/0.4.1_web_ui.zip /tmp/webui.zip
+ADD https://dl.bintray.com/mitchellh/consul/0.5.2_web_ui.zip /tmp/webui.zip
 RUN mkdir /ui && cd /ui && unzip /tmp/webui.zip && rm /tmp/webui.zip
 
 ADD https://get.docker.io/builds/Linux/x86_64/docker-1.2.0 /bin/docker
 RUN chmod +x /bin/docker
 
-ADD https://github.com/hashicorp/consul-template/releases/download/v0.6.0/consul-template_0.6.0_linux_amd64.tar.gz /tmp/
-RUN tar -zxf /tmp/consul-template_0.6.0_linux_amd64.tar.gz -C /bin/ --strip-components=1 && rm -rf /tmp/consul-template_0.6.0_linux_amd64.tar.gz
+ADD https://github.com/hashicorp/consul-template/releases/download/v0.10.0/consul-template_0.10.0_linux_amd64.tar.gz /tmp/
+RUN tar -zxf /tmp/consul-template_0.10.0_linux_amd64.tar.gz -C /bin/ --strip-components=1 && rm -rf /tmp/consul-template_0.10.0_linux_amd64.tar.gz
 
 RUN virtualenv /tmp/circus && cd /tmp/circus && bin/pip install circus
 
