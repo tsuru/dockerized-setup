@@ -174,9 +174,3 @@ $ docker run -d --name registrator -v /var/run/docker.sock:/tmp/docker.sock \
 $ docker run -d -e SERVICE_ID="router" --name router -h router -p 8080:8080 wagnersza/router
 $ docker run -d -e HOST_IP=`docker-machine ip docker03` -e SERVICE_ID="tsuru-api" --name tsuru-api -h tsuru-api -p 8000:8000 wagnersza/tsuru-api
 ```
-## Start RUNCHER server only for monitoring hosts
-
-```bash
-  $ eval "$(docker-machine env docker01)"
-  $ docker run -d -e SERVICE_ID="rancher-server" --name rancher-server --restart=always -p 8888:8080 rancher/server
-```
