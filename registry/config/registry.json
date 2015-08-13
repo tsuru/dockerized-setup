@@ -1,9 +1,0 @@
-{
-    "service": {
-        "name": "registry",
-        "tags": [
-            "master"
-        ],
-        "port": 5000
-    }
-}

@@ -1,9 +1,0 @@
-{
-    "service": {
-        "name": "gandalf",
-        "tags": [
-            "git"
-        ],
-        "port": 8081
-    }
-}

@@ -1,9 +1,0 @@
-{
-    "service": {
-        "name": "router",
-        "tags": [
-            "master"
-        ],
-        "port": 8080
-    }
-}

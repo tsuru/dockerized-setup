@@ -1,9 +1,0 @@
-{
-    "service": {
-        "name": "api",
-        "tags": [
-            "api"
-        ],
-        "port": 8080
-    }
-}
