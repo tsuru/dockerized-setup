@@ -9,12 +9,12 @@ ADD https://get.docker.com/builds/Linux/x86_64/docker-latest /bin/docker
 RUN chmod +x /bin/docker
 
 ADD ./consul-template.conf /etc/consul-template.conf
-RUN mkdir -p /data/tsuru && touch /data/tsuru/tsuru.ctmpl
-RUN mkdir -p /data/router && touch /data/router/hipache.ctmpl
-RUN touch /data/router/redis.ctmpl
 VOLUME /data/tsuru
 VOLUME /data/router
 
 ENV DOCKER_HOST unix:///tmp/docker.sock
 
-ENTRYPOINT /bin/consul-template -config /etc/consul-template.conf
+ADD ./run.sh /bin/run.sh
+RUN chmod +x /bin/run.sh
+
+ENTRYPOINT run.sh
