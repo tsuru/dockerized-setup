@@ -9,6 +9,10 @@ ADD https://get.docker.com/builds/Linux/x86_64/docker-latest /bin/docker
 RUN chmod +x /bin/docker
 
 ADD ./consul-template.conf /etc/consul-template.conf
+ADD ./tsuru.ctmpl /tmp/tsuru.ctmpl
+ADD ./redis.ctmpl /tmp/redis.ctmpl
+ADD ./hipache.ctmpl /tmp/hipache.ctmpl
+
 VOLUME /data/tsuru
 VOLUME /data/router
 
@@ -19,4 +23,4 @@ RUN chmod +x /bin/run.sh
 
 LABEL "name"="consul-template"
 
-ENTRYPOINT run.sh
+ENTRYPOINT /bin/consul-template -config /etc/consul-template.conf
