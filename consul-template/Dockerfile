@@ -17,4 +17,6 @@ ENV DOCKER_HOST unix:///tmp/docker.sock
 ADD ./run.sh /bin/run.sh
 RUN chmod +x /bin/run.sh
 
+LABEL "name"="consul-template"
+
 ENTRYPOINT run.sh
