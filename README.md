@@ -1,6 +1,6 @@
-# Under construction
+# Under construction (now is only a POC)
 
-# tsuru docker swarm deploy
+## tsuru docker swarm deploy
 
 ## Install consul machine bootstrap
   ```bash
