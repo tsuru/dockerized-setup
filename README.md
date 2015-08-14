@@ -11,7 +11,7 @@
     -d virtualbox docker01  
   ```
 
-## Install host image dependences
+## Start host image dependences
 
 ### Consul
 
