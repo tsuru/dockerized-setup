@@ -64,7 +64,7 @@
   ```
 ### Router
   ```bash
-  $ docker run -d -e SERVICE_ID="router-hipache" -p 80:8080 tsuru/router-hipache
+  $ docker run -d -e SERVICE_ID="router-hipache" -p 8080:8080 tsuru/router-hipache
   ```
 ### Tsuru API
   ```bash
