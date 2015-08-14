@@ -35,7 +35,7 @@
   ```bash
   $ docker run -d -v /var/run/docker.sock:/tmp/docker.sock \
       --restart=always \
-      gliderlabs/registrator consul://`docker-machine ip docker01`:8500
+      gliderlabs/registrator -ip `docker-machine ip docker01` -resync 5 consul://`docker-machine ip docker01`:8500
   ```
 
 ### Consul template
