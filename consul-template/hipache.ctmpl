@@ -6,8 +6,8 @@
         "workers": {{key "hipache/server/workers" | regexReplaceAll "^$" "5" }},
         "maxSockets": {{key "hipache/server/maxSockets" | regexReplaceAll "^$" "100" }},
         "deadBackendTTL": {{key "hipache/server/deadBackendTTL" | regexReplaceAll "^$" "30" }},
-        "tcpTimeout": 30,
-        "httpKeepAlive": true
+        "tcpTimeout": {{key "hipache/server/tcpTimeout" | regexReplaceAll "^$" "30" }},
+        "httpKeepAlive": {{key "hipache/server/httpKeepAlive" | regexReplaceAll "^$" "true" }}
     },
     "redisHost": "127.0.0.1",
     "redisPort": 6379,
