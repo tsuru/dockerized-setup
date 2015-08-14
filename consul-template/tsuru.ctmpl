@@ -82,8 +82,10 @@ docker:
     add-key-cmd: {{key "tsuru/docker/ssh/add-key-cmd" | regexReplaceAll "^$" "/var/lib/tsuru/add-key" }}
     user: {{key "tsuru/docker/ssh/user" | regexReplaceAll "^$" "ubuntu" }}
 
-routers:
+routers:{{range ls "tsuru/routers"}}
+  {{.Value}}{{else}}
   hipache:
-      type: hipache
-      domain: router-hipache.service.consul
-      redis-server: {{range service "redis"}}{{.Address}}:{{.Port}}{{else}}{{key "tsuru/routers/hipache/redis-server"}}{{end}}
+    type: hipache
+    domain: router-hipache.service.consul
+    redis-server: {{range service "redis"}}{{.Address}}:{{.Port}}{{else}}{{key "tsuru/routers/hipache/redis-server"}}{{end}}{{end}}
+    
