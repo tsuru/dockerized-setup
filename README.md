@@ -8,7 +8,7 @@
     --engine-opt dns=172.17.42.1 \
     --engine-opt dns=8.8.8.8 \
     --engine-opt dns-search=service.consul \
-    -d virtualbox docker01  
+    -d virtualbox docker01
   ```
 
 ## Start host image dependences
