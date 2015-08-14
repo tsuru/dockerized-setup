@@ -188,7 +188,7 @@ dir /var/lib/redis
 # different interval, or to listen to another port, and so on.
 #
 # slaveof <masterip> <masterport>
-slaveof {{range service "redis"}}{{.Address}} {{.Port}}{{else}}{{key "hipache/redis/host"}} {{key "hipache/redis/port"}}{{end}}
+slaveof {{range service "redis"}}{{.Address}} {{.Port}}{{end}}
 
 # If the master is password protected (using the "requirepass" configuration
 # directive below) it is possible to tell the slave to authenticate before
