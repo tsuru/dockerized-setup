@@ -73,5 +73,5 @@
     -e SERVICE_ID="tsuru-api" \
     -p 8000:8000 \
     -v /data/tsuru:/data/tsuru \
-    tsuru/api
+    tsuru/tsuru-api
   ```
