@@ -70,20 +70,20 @@ docker:
   repository-namespace: {{key "tsuru/docker/repository-namespace" | regexReplaceAll "^$" "tsuru" }}
   router: {{key "tsuru/docker/router" | regexReplaceAll "^$" "hipache" }}
   deploy-cmd: {{key "tsuru/docker/deploy-cmd" | regexReplaceAll "^$" "/var/lib/tsuru/deploy" }}
-  segregate: true
+  segregate: {{key "tsuru/docker/segregate" | regexReplaceAll "^$" "true" }}
   cluster:
-    storage: mongodb
+    storage: {{key "tsuru/docker/cluster/storage" | regexReplaceAll "^$" "mongodb" }}
     mongo-url: {{range service "mongo"}}{{.Address}}:{{.Port}}{{end}}
-    mongo-database: dockercluster
+    mongo-database: {{key "tsuru/docker/cluster/mongo-database" | regexReplaceAll "^$" "dockercluster" }}
   run-cmd:
-    bin: /var/lib/tsuru/start
-    port: "8888"
+    bin: {{key "tsuru/docker/run-cmd/bin" | regexReplaceAll "^$" "/var/lib/tsuru/start" }}
+    port: {{key "tsuru/docker/run-cmd/port" | regexReplaceAll "^$" "8888" }}
   ssh:
-    add-key-cmd: /var/lib/tsuru/add-key
-    user: ubuntu
+    add-key-cmd: {{key "tsuru/docker/ssh/add-key-cmd" | regexReplaceAll "^$" "/var/lib/tsuru/add-key" }}
+    user: {{key "tsuru/docker/ssh/user" | regexReplaceAll "^$" "ubuntu" }}
 
 routers:
-    hipache:
-        type: hipache
-        domain: router-hipache.service.consul
-        redis-server: {{range service "redis"}}{{.Address}}:{{.Port}}{{else}}{{key "tsuru/routers/hipache/redis-server"}}{{end}}
+  hipache:
+      type: hipache
+      domain: router-hipache.service.consul
+      redis-server: {{range service "redis"}}{{.Address}}:{{.Port}}{{else}}{{key "tsuru/routers/hipache/redis-server"}}{{end}}
