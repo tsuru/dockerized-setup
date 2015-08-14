@@ -1,39 +1,75 @@
-listen: "0.0.0.0:8000"
-host: http://{{env "HOST_IP"}}.nip.io:8000
+listen: {{key "tsuru/listen" | regexReplaceAll "^$" "0.0.0.0:8000" }}
+host: {{key "tsuru/debug" | regexReplaceAll "^$" "tsuru.example.com:8000" }}
 debug: {{key "tsuru/debug" | regexReplaceAll "^$" "false" }}
-
+disable-index-page: {{key "tsuru/disable-index-page" | regexReplaceAll "^$" "false" }}
 admin-team: {{key "tsuru/admin-team" | regexReplaceAll "^$" "admin" }}
-log:
-  file: /var/log/tsuru.log
-  disable-syslog: true
-
-auth:
-  user-registration: {{key "tsuru/auth/user-registration" | regexReplaceAll "^$" "true" }}
-  scheme: {{key "tsuru/auth/scheme" | regexReplaceAll "^$" "native" }}
-
+{{if key "tsuru/units-per-app"}}
+quota:
+  units-per-app: {{key "tsuru/units-per-app"}}
+  {{if key "tsuru/apps-per-user"}}apps-per-user: {{key "tsuru/apps-per-user"}}{{end}}{{end}}
+{{if key "tsuru/use-tls"}}
+use-tls: true
+tls:
+  cert-file: {{key "tsuru/tls/cert-file"}}
+  key-file: {{key "tsuru/tls/key-file"}}{{end}}
 database:
   url: {{range service "mongo"}}{{.Address}}:{{.Port}}{{end}}
-  name: {{key "tsuru/database/name" | regexReplaceAll "^$" "tsurudb" }}
+  name: {{key "tsuru/database/name" | regexReplaceAll "^$" "tsurudb" }}{{if service "mongo-log"}}
+  logdb-url: {{range service "mongo-log"}}{{.Address}}:{{.Port}}{{end}}
+  logdb-name: {{key "tsuru/database/logdb-name" | regexReplaceAll "^$" "tsurudb" }}{{end}}{{if key "tsuru/smtp/server"}}
+smtp:
+  server: {{key "tsuru/smtp/server"}}
+  user: {{key "tsuru/smtp/user"}}
+  password: {{key "tsuru/smtp/password"}}{{end}}
 
-repo-manager: none
+repo-manager: {{key "tsuru/repo-manager" | regexReplaceAll "^$" "none" }}{{if key "tsuru/repo-manager"}}
 git:
   unit-repo: {{key "tsuru/git/unit-repo" | regexReplaceAll "^$" "/home/application/current" }}
-  api-server: {{range service "gandalf"}}{{.Address}}:{{.Port}}{{end}}
+  api-server: {{range service "mongo"}}{{.Name}}:{{.Port}}{{end}}{{end}}
+
+log:
+  file: {{key "tsuru/log/file" | regexReplaceAll "^$" "/var/log/tsuru.log" }}
+  disable-syslog: {{key "tsuru/log/disable-syslog" | regexReplaceAll "^$" "true" }}
+  syslog-tag: {{key "tsuru/log/syslog-tag" | regexReplaceAll "^$" "tsr" }}
+  use-stderr: {{key "tsuru/log/use-stderr" | regexReplaceAll "^$" "false" }}
+
+auth:
+  scheme: {{key "tsuru/auth/scheme" | regexReplaceAll "^$" "native" }}
+  user-registration: {{key "tsuru/auth/user-registration" | regexReplaceAll "^$" "true" }}
+  hash-cost: {{key "tsuru/auth/hash-cost" | regexReplaceAll "^$" "4" }}
+  token-expire-days: {{key "tsuru/auth/token-expire-days" | regexReplaceAll "^$" "7" }}
+  max-simultaneous-sessions: {{key "tsuru/auth/max-simultaneous-sessions" | regexReplaceAll "^$" "unlimited" }}{{if key "tsuru/auth/scheme"}}
+  oauth:
+    client-id: {{key "tsuru/auth/oauth/client-id"}}
+    client-secret: {{key "tsuru/auth/oauth/client-secret"}}
+    scope: {{key "tsuru/auth/oauth/scope"}}
+    auth-url: {{key "tsuru/auth/oauth/auth-url"}}
+    token-url: {{key "tsuru/auth/oauth/token-url"}}
+    info-url: {{key "tsuru/auth/oauth/info-url"}}
+    collection: {{key "tsuru/auth/oauth/collection"}}
+    callback-port: {{key "tsuru/auth/oauth/callback-port"}}{{end}}
+
+queue:
+  mongo-url: {{range service "mongo"}}{{.Address}}:{{.Port}}{{end}}
+  mongo-database: queuedb
 
 pubsub:
-    redis-host: {{range service "redis"}}{{.Address}}:{{.Port}}{{else}}{{key "tsuru/pubsub/redis-host"}}{{end}}
-    redis-port: 6379
-queue:
-    mongo-url: {{range service "mongo"}}{{.Address}}:{{.Port}}{{end}}
-    mongo-database: queuedb
+  redis-host: {{range service "redis"}}{{.Address}}{{end}}
+  redis-port: {{range service "redis"}}{{.Port}}{{end}}{{if key "tsuru/pubsub/redis-password"}}
+  redis-password: {{key "tsuru/pubsub/redis-password"}}{{end}}
+  redis-db: {{key "tsuru/pubsub/redis-db" | regexReplaceAll "^$" "3" }}
+  pool-max-idle-conn: {{key "tsuru/pubsub/pool-max-idle-conn" | regexReplaceAll "^$" "20" }}
+  pool-idle-timeout: {{key "tsuru/pubsub/pool-idle-timeout" | regexReplaceAll "^$" "300" }}
+  redis-dial-timeout: {{key "tsuru/pubsub/redis-dial-timeout" | regexReplaceAll "^$" "0.1" }}
+  redis-read-timeout: {{key "tsuru/pubsub/redis-read-timeout" | regexReplaceAll "^$" "1800" }}
+  redis-write-timeout: {{key "tsuru/pubsub/redis-write-timeout" | regexReplaceAll "^$" "0.5" }}
 
-provisioner: docker
 docker:
   collection: docker_containers
-  registry: registry.service.consul:5000
-  repository-namespace: tsuru
-  router: hipache
-  deploy-cmd: /var/lib/tsuru/deploy
+  registry: {{key "tsuru/docker/registry" | regexReplaceAll "^$" "registry.service.consul:5000" }}
+  repository-namespace: {{key "tsuru/docker/repository-namespace" | regexReplaceAll "^$" "tsuru" }}
+  router: {{key "tsuru/docker/router" | regexReplaceAll "^$" "hipache" }}
+  deploy-cmd: {{key "tsuru/docker/deploy-cmd" | regexReplaceAll "^$" "/var/lib/tsuru/deploy" }}
   segregate: true
   cluster:
     storage: mongodb
