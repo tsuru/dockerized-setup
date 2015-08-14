@@ -49,5 +49,5 @@ docker:
 routers:
     hipache:
         type: hipache
-        domain: router.service.consul
+        domain: router-hipache.service.consul
         redis-server: {{range service "redis"}}{{.Address}}:{{.Port}}{{else}}{{key "tsuru/routers/hipache/redis-server"}}{{end}}
