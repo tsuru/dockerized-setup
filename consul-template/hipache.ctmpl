@@ -1,11 +1,11 @@
 {
     "server": {
-        "accessLog": "/var/log/hipache/access_log",
-        "accessLogMode": "syslog",
-        "port": 8080,
-        "workers": 5,
-        "maxSockets": 100,
-        "deadBackendTTL": 30,
+        "accessLog": "{{key "hipache/server/accessLog" | regexReplaceAll "^$" "/var/log/hipache/access_log" }}",
+        "accessLogMode": "{{key "hipache/server/accessLogMode" | regexReplaceAll "^$" "syslog" }}",
+        "port": {{key "hipache/server/port" | regexReplaceAll "^$" "8080" }},
+        "workers": {{key "hipache/server/workers" | regexReplaceAll "^$" "5" }},
+        "maxSockets": {{key "hipache/server/maxSockets" | regexReplaceAll "^$" "100" }},
+        "deadBackendTTL": {{key "hipache/server/deadBackendTTL" | regexReplaceAll "^$" "30" }},
         "tcpTimeout": 30,
         "httpKeepAlive": true
     },
