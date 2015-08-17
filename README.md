@@ -52,7 +52,9 @@
 
 ### MongoDB
   ```bash
-  $ docker run -d -e SERVICE_ID="mongo" -p 27017:27017 mongo
+  $ docker run -d -e SERVICE_ID="mongo" -p 27017:27017 mongo --replSet rStsuru \
+    mongo --eval "JSON.stringify(rs.initiate());" \
+    mongo --eval "JSON.stringify(rs.add('mongo01:27017'))"
   ```
 ### Redis
   ```bash
@@ -69,6 +71,201 @@
 ### Tsuru API
   ```bash
   $ docker run -d \
+    -l name="tsuru-api" \
+    -e SERVICE_ID="tsuru-api" \
+    -p 8000:8000 \
+    -v /data/tsuru:/data/tsuru \
+    tsuru/tsuru-api
+  ```
+
+# 3 machines HA Deployment
+
+## Install machines
+  ```bash
+  $ docker-machine create \
+    --engine-opt dns=172.17.42.1 \
+    --engine-opt dns=8.8.8.8 \
+    --engine-opt dns-search=service.consul \
+    -d virtualbox docker01
+
+  $ docker-machine create \
+    --engine-opt dns=172.17.42.1 \
+    --engine-opt dns=8.8.8.8 \
+    --engine-opt dns-search=service.consul \
+    -d virtualbox docker02
+
+  $ docker-machine create \
+    --engine-opt dns=172.17.42.1 \
+    --engine-opt dns=8.8.8.8 \
+    --engine-opt dns-search=service.consul \
+    -d virtualbox docker03
+  ```
+
+## Start host image dependences
+
+### Consul
+
+  ```bash
+  $ eval "$(docker-machine env docker01)"
+  $ docker run -d -v /data/consul:/data/consul \
+    --name consul \
+    --restart=always \
+    -p 8300:8300 \
+    -p 8301:8301 \
+    -p 8301:8301/udp \
+    -p 8302:8302 \
+    -p 8302:8302/udp \
+    -p 8400:8400 \
+    -p 8500:8500 \
+    -p 53:53/udp \
+    progrium/consul -server -advertise `docker-machine ip docker01` -bootstrap-expect 3
+
+  $ eval "$(docker-machine env docker02)"
+  $ docker run -d -v /data/consul:/data/consul \
+    --name consul \
+    --restart=always \
+    -p 8300:8300 \
+    -p 8301:8301 \
+    -p 8301:8301/udp \
+    -p 8302:8302 \
+    -p 8302:8302/udp \
+    -p 8400:8400 \
+    -p 8500:8500 \
+    -p 53:53/udp \
+    progrium/consul -server -advertise `docker-machine ip docker02` -join `docker-machine ip docker01`
+
+  $ eval "$(docker-machine env docker03)"
+  $ docker run -d -v /data/consul:/data/consul \
+    --name consul \
+    --restart=always \
+    -p 8300:8300 \
+    -p 8301:8301 \
+    -p 8301:8301/udp \
+    -p 8302:8302 \
+    -p 8302:8302/udp \
+    -p 8400:8400 \
+    -p 8500:8500 \
+    -p 53:53/udp \
+    progrium/consul -server -advertise `docker-machine ip docker03` -join `docker-machine ip docker01`
+  ```
+### Consul registrator
+
+  ```bash
+  $ eval "$(docker-machine env docker01)"
+  $ docker run -d -v /var/run/docker.sock:/tmp/docker.sock \
+    --name registrator \
+    --restart=always \
+    gliderlabs/registrator -ip `docker-machine ip docker01` -resync 5 consul://`docker-machine ip docker01`:8500
+
+  $ eval "$(docker-machine env docker02)"
+  $ docker run -d -v /var/run/docker.sock:/tmp/docker.sock \
+    --name registrator \
+    --restart=always \
+    gliderlabs/registrator -ip `docker-machine ip docker02` -resync 5 consul://`docker-machine ip docker02`:8500
+
+  $ eval "$(docker-machine env docker03)"
+  $ docker run -d -v /var/run/docker.sock:/tmp/docker.sock \
+    --name registrator \
+    --restart=always \
+    gliderlabs/registrator -ip `docker-machine ip docker03` -resync 5 consul://`docker-machine ip docker03`:8500
+  ```
+
+### Consul template
+  ```bash
+  $ eval "$(docker-machine env docker01)"
+  $ docker run -d \
+    --name consul-template \
+    -l name="consul-template" \
+    -v /var/run/docker.sock:/tmp/docker.sock \
+    -v /data/tsuru:/data/tsuru \
+    -v /data/router:/data/router \
+    tsuru/consul-template
+
+  $ eval "$(docker-machine env docker02)"
+  $ docker run -d \
+    --name consul-template \
+    -l name="consul-template" \
+    -v /var/run/docker.sock:/tmp/docker.sock \
+    -v /data/tsuru:/data/tsuru \
+    -v /data/router:/data/router \
+    tsuru/consul-template
+
+  $ eval "$(docker-machine env docker03)"
+  $ docker run -d \
+    --name consul-template \
+    -l name="consul-template" \
+    -v /var/run/docker.sock:/tmp/docker.sock \
+    -v /data/tsuru:/data/tsuru \
+    -v /data/router:/data/router \
+    tsuru/consul-template
+  ```
+## Start tsuru
+
+### MongoDB
+  ```bash
+  $ eval "$(docker-machine env docker01)"
+  $ docker run -d --name mongo -e SERVICE_ID="mongo" -p 27017:27017 mongo --replSet rStsuru
+
+  $ eval "$(docker-machine env docker02)"
+  $ docker run -d --name mongo -e SERVICE_ID="mongo" -p 27017:27017 mongo --replSet rStsuru
+
+  $ eval "$(docker-machine env docker03)"
+  $ docker run -d --name mongo -e SERVICE_ID="mongo" -p 27017:27017 mongo --replSet rStsuru
+  $ docker exec mongo mongo --eval "JSON.stringify(rs.initiate());"
+  $ docker exec mongo mongo --eval "JSON.stringify(rs.add('`docker-machine ip docker01`:27017'))"
+  $ docker exec mongo mongo --eval "JSON.stringify(rs.add('`docker-machine ip docker02`:27017'))"
+  ```
+### Redis (TODO - support redis cluster to implement HA)
+  ```bash
+  $ eval "$(docker-machine env docker01)"
+  $ docker run -d --name redis -e SERVICE_ID="redis" -p 6379:6379 redis
+  ```
+### Docker Registry
+  ```bash
+  $ eval "$(docker-machine env docker01)"
+  $ docker run -d --name registry -e SERVICE_ID="registry" -p 5000:5000 registry
+
+  $ eval "$(docker-machine env docker02)"
+  $ docker run -d --name registry -e SERVICE_ID="registry" -p 5000:5000 registry
+
+  $ eval "$(docker-machine env docker03)"
+  $ docker run -d --name registry -e SERVICE_ID="registry" -p 5000:5000 registry
+
+  ```
+### Router
+  ```bash
+  $ eval "$(docker-machine env docker01)"
+  $ docker run -d --name router-hipache -e SERVICE_ID="router-hipache" -p 8080:8080 tsuru/router-hipache
+
+  $ eval "$(docker-machine env docker02)"
+  $ docker run -d --name router-hipache -e SERVICE_ID="router-hipache" -p 8080:8080 tsuru/router-hipache
+
+  $ eval "$(docker-machine env docker03)"
+  $ docker run -d --name router-hipache -e SERVICE_ID="router-hipache" -p 8080:8080 tsuru/router-hipache
+  ```
+### Tsuru API
+  ```bash
+  $ eval "$(docker-machine env docker01)"
+  $ docker run -d \
+    --name tsuru-api
+    -l name="tsuru-api" \
+    -e SERVICE_ID="tsuru-api" \
+    -p 8000:8000 \
+    -v /data/tsuru:/data/tsuru \
+    tsuru/tsuru-api
+
+  $ eval "$(docker-machine env docker02)"
+  $ docker run -d \
+    --name tsuru-api
+    -l name="tsuru-api" \
+    -e SERVICE_ID="tsuru-api" \
+    -p 8000:8000 \
+    -v /data/tsuru:/data/tsuru \
+    tsuru/tsuru-api
+
+  $ eval "$(docker-machine env docker03)"
+  $ docker run -d \
+    --name tsuru-api
     -l name="tsuru-api" \
     -e SERVICE_ID="tsuru-api" \
     -p 8000:8000 \
