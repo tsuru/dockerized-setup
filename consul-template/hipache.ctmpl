@@ -1,13 +1,13 @@
 {
     "server": {
-        "accessLog": "{{key "hipache/server/accessLog" | regexReplaceAll "^$" "/var/log/hipache/access_log" }}",
-        "accessLogMode": "{{key "hipache/server/accessLogMode" | regexReplaceAll "^$" "syslog" }}",
-        "port": {{key "hipache/server/port" | regexReplaceAll "^$" "8080" }},
-        "workers": {{key "hipache/server/workers" | regexReplaceAll "^$" "5" }},
-        "maxSockets": {{key "hipache/server/maxSockets" | regexReplaceAll "^$" "100" }},
-        "deadBackendTTL": {{key "hipache/server/deadBackendTTL" | regexReplaceAll "^$" "30" }},
-        "tcpTimeout": {{key "hipache/server/tcpTimeout" | regexReplaceAll "^$" "30" }},
-        "httpKeepAlive": {{key "hipache/server/httpKeepAlive" | regexReplaceAll "^$" "true" }}
+        "accessLog": "{{if key "hipache/server/accessLog"}}{{key "hipache/server/accessLog"}}{{else}}/var/log/hipache/access_log{{end}}",
+        "accessLogMode": "{{if key "hipache/server/accessLogMode"}}{{key "hipache/server/accessLogMode"}}{{else}}syslog{{end}}",
+        "port": {{if key "hipache/server/port"}}{{key "hipache/server/port"}}{{else}}8080{{end}},
+        "workers": {{if key "hipache/server/workers"}}{{key "hipache/server/workers"}}{{else}}5{{end}},
+        "maxSockets": {{if key "hipache/server/maxSockets"}}{{key "hipache/server/maxSockets"}}{{else}}100{{end}},
+        "deadBackendTTL": {{if key "hipache/server/deadBackendTTL"}}{{key "hipache/server/deadBackendTTL"}}{{else}}30{{end}},
+        "tcpTimeout": {{if key "hipache/server/tcpTimeout"}}{{key "hipache/server/tcpTimeout"}}{{else}}30{{end}},
+        "httpKeepAlive": {{if key "hipache/server/httpKeepAlive"}}{{key "hipache/server/httpKeepAlive"}}{{else}}true{{end}}
     },
     "redisHost": "127.0.0.1",
     "redisPort": 6379,
