@@ -13,9 +13,9 @@ tls:
   cert-file: {{key "tsuru/tls/cert-file"}}
   key-file: {{key "tsuru/tls/key-file"}}{{end}}
 database:
-  url: {{if key "tsuru/database/user"}}mongodb://{{end}}{{key "tsuru/database/user"}}{{if key "tsuru/database/password"}}:{{end}}{{key "tsuru/database/password"}}{{if key "tsuru/database/user"}}@{{end}}{{range $index, $service := service "mongo" "any"}}{{if ne $index 0}},{{end}}{{.Address}}:{{.Port}}{{end}}{{if key "tsuru/database/user"}}/{{end}}{{if key "tsuru/database/name"}}{{key "tsuru/database/name"}}{{else}}tsurudb{{end}}{{if key "tsuru/database/maxpoolsize"}}?maxPoolSize={{end}}{{key "tsuru/database/maxpoolsize"}}
+  url: {{if key "tsuru/database/user"}}mongodb://{{end}}{{key "tsuru/database/user"}}{{if key "tsuru/database/password"}}:{{end}}{{key "tsuru/database/password"}}{{if key "tsuru/database/user"}}@{{end}}{{range $index, $service := service "mongo" "any"}}{{if ne $index 0}},{{end}}{{.Address}}:{{.Port}}{{end}}{{if key "tsuru/database/user"}}/{{end}}{{if key "tsuru/database/name"}}{{key "tsuru/database/name"}}{{end}}{{if key "tsuru/database/maxpoolsize"}}?maxPoolSize={{end}}{{key "tsuru/database/maxpoolsize"}}
   name: {{if key "tsuru/database/name"}}{{key "tsuru/database/name"}}{{else}}tsurudb{{end}}{{if service "mongo-log"}}
-  logdb-url: {{if key "tsuru/database/logdb-user"}}mongodb://{{end}}{{key "tsuru/database/logdb-user"}}{{if key "tsuru/database/logdb-password"}}:{{end}}{{key "tsuru/database/logdb-password"}}{{if key "tsuru/database/logdb-user"}}@{{end}}{{range $index, $service := service "mongo-log" "any"}}{{if ne $index 0}},{{end}}{{.Address}}:{{.Port}}{{end}}{{if key "tsuru/database/logdb-user"}}/{{end}}{{if key "tsuru/database/logdb-name"}}{{key "tsuru/database/logdb-name"}}{{else}}tsurudb{{end}}{{if key "tsuru/database/logdb-maxpoolsize"}}?maxPoolSize={{end}}{{key "tsuru/database/logdb-maxpoolsize"}}
+  logdb-url: {{if key "tsuru/database/logdb-user"}}mongodb://{{end}}{{key "tsuru/database/logdb-user"}}{{if key "tsuru/database/logdb-password"}}:{{end}}{{key "tsuru/database/logdb-password"}}{{if key "tsuru/database/logdb-user"}}@{{end}}{{range $index, $service := service "mongo-log" "any"}}{{if ne $index 0}},{{end}}{{.Address}}:{{.Port}}{{end}}{{if key "tsuru/database/logdb-user"}}/{{end}}{{if key "tsuru/database/logdb-name"}}{{key "tsuru/database/logdb-name"}}{{end}}{{if key "tsuru/database/logdb-maxpoolsize"}}?maxPoolSize={{end}}{{key "tsuru/database/logdb-maxpoolsize"}}
   logdb-name: {{if key "tsuru/database/logdb-name"}}{{key "tsuru/database/logdb-name"}}{{else}}tsurudb{{end}}{{end}}{{if key "tsuru/smtp/server"}}
 smtp:
   server: {{key "tsuru/smtp/server"}}
@@ -50,7 +50,7 @@ auth:
     callback-port: {{key "tsuru/auth/oauth/callback-port"}}{{end}}
 
 queue:
-  mongo-url: {{if key "tsuru/database/user"}}mongodb://{{end}}{{key "tsuru/database/user"}}{{if key "tsuru/database/password"}}:{{end}}{{key "tsuru/database/password"}}{{if key "tsuru/database/user"}}@{{end}}{{range $index, $service := service "mongo" "any"}}{{if ne $index 0}},{{end}}{{.Address}}:{{.Port}}{{end}}{{if key "tsuru/database/user"}}/{{end}}{{if key "tsuru/queue/mongo-database"}}{{key "tsuru/queue/mongo-database"}}{{else}}queuedb{{end}}{{if key "tsuru/database/maxpoolsize"}}?maxPoolSize={{end}}{{key "tsuru/database/maxpoolsize"}}
+  mongo-url: {{if key "tsuru/database/user"}}mongodb://{{end}}{{key "tsuru/database/user"}}{{if key "tsuru/database/password"}}:{{end}}{{key "tsuru/database/password"}}{{if key "tsuru/database/user"}}@{{end}}{{range $index, $service := service "mongo" "any"}}{{if ne $index 0}},{{end}}{{.Address}}:{{.Port}}{{end}}{{if key "tsuru/database/user"}}/{{end}}{{if key "tsuru/queue/mongo-database"}}{{key "tsuru/queue/mongo-database"}}{{end}}{{if key "tsuru/database/maxpoolsize"}}?maxPoolSize={{end}}{{key "tsuru/database/maxpoolsize"}}
   mongo-database: {{if key "tsuru/queue/mongo-database"}}{{key "tsuru/queue/mongo-database"}}{{else}}queuedb{{end}}
 
 pubsub:
@@ -73,7 +73,7 @@ docker:
   segregate: {{if key "tsuru/docker/segregate"}}{{key "tsuru/docker/segregate"}}{{else}}true{{end}}
   cluster:
     storage: {{if key "tsuru/docker/cluster/storage"}}{{key "tsuru/docker/cluster/storage"}}{{else}}mongodb{{end}}
-    mongo-url: {{if key "tsuru/database/user"}}mongodb://{{end}}{{key "tsuru/database/user"}}{{if key "tsuru/database/password"}}:{{end}}{{key "tsuru/database/password"}}{{if key "tsuru/database/user"}}@{{end}}{{range $index, $service := service "mongo" "any"}}{{if ne $index 0}},{{end}}{{.Address}}:{{.Port}}{{end}}{{if key "tsuru/database/user"}}/{{end}}{{if key "tsuru/docker/cluster/mongo-database"}}{{key "tsuru/docker/cluster/mongo-database"}}{{else}}dockercluster{{end}}{{if key "tsuru/database/maxpoolsize"}}?maxPoolSize={{end}}{{key "tsuru/database/maxpoolsize"}}
+    mongo-url: {{if key "tsuru/database/user"}}mongodb://{{end}}{{key "tsuru/database/user"}}{{if key "tsuru/database/password"}}:{{end}}{{key "tsuru/database/password"}}{{if key "tsuru/database/user"}}@{{end}}{{range $index, $service := service "mongo" "any"}}{{if ne $index 0}},{{end}}{{.Address}}:{{.Port}}{{end}}{{if key "tsuru/database/user"}}/{{end}}{{if key "tsuru/docker/cluster/mongo-database"}}{{key "tsuru/docker/cluster/mongo-database"}}{{end}}{{if key "tsuru/database/maxpoolsize"}}?maxPoolSize={{end}}{{key "tsuru/database/maxpoolsize"}}
     mongo-database: {{if key "tsuru/docker/cluster/mongo-database"}}{{key "tsuru/docker/cluster/mongo-database"}}{{else}}dockercluster{{end}}
   run-cmd:
     bin: {{if key "tsuru/docker/run-cmd/bin"}}{{key "tsuru/docker/run-cmd/bin"}}{{else}}/var/lib/tsuru/start{{end}}
