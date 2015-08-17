@@ -1,5 +1,5 @@
 listen: {{key "tsuru/listen" | regexReplaceAll "^$" "0.0.0.0:8000" }}
-host: {{key "tsuru/debug" | regexReplaceAll "^$" "tsuru.example.com:8000" }}
+host: {{key "tsuru/host" | regexReplaceAll "^$" "tsuru.example.com:8000" }}
 debug: {{key "tsuru/debug" | regexReplaceAll "^$" "false" }}
 disable-index-page: {{key "tsuru/disable-index-page" | regexReplaceAll "^$" "false" }}
 admin-team: {{key "tsuru/admin-team" | regexReplaceAll "^$" "admin" }}
@@ -13,9 +13,9 @@ tls:
   cert-file: {{key "tsuru/tls/cert-file"}}
   key-file: {{key "tsuru/tls/key-file"}}{{end}}
 database:
-  url: {{range service "mongo"}}{{.Address}}:{{.Port}}{{end}}
+  url: {{if key "tsuru/database/user"}}mongodb://{{end}}{{key "tsuru/database/user"}}{{if key "tsuru/database/password"}}:{{end}}{{key "tsuru/database/password"}}{{if key "tsuru/database/user"}}@{{end}}{{range $index, $service := service "mongo" "any"}}{{if ne $index 0}},{{end}}{{.Address}}:{{.Port}}{{end}}{{if key "tsuru/database/user"}}/{{end}}{{key "tsuru/database/name" | regexReplaceAll "^$" "tsurudb" }}{{if key "tsuru/database/maxpoolsize"}}?maxPoolSize={{end}}{{key "tsuru/database/maxpoolsize"}}
   name: {{key "tsuru/database/name" | regexReplaceAll "^$" "tsurudb" }}{{if service "mongo-log"}}
-  logdb-url: {{range service "mongo-log"}}{{.Address}}:{{.Port}}{{end}}
+  logdb-url: {{if key "tsuru/database/logdb-user"}}mongodb://{{end}}{{key "tsuru/database/logdb-user"}}{{if key "tsuru/database/logdb-password"}}:{{end}}{{key "tsuru/database/logdb-password"}}{{if key "tsuru/database/logdb-user"}}@{{end}}{{range $index, $service := service "mongo-log" "any"}}{{if ne $index 0}},{{end}}{{.Address}}:{{.Port}}{{end}}{{if key "tsuru/database/logdb-user"}}/{{end}}{{key "tsuru/database/logdb-name" | regexReplaceAll "^$" "tsurudb" }}{{if key "tsuru/database/logdb-maxpoolsize"}}?maxPoolSize={{end}}{{key "tsuru/database/logdb-maxpoolsize"}}
   logdb-name: {{key "tsuru/database/logdb-name" | regexReplaceAll "^$" "tsurudb" }}{{end}}{{if key "tsuru/smtp/server"}}
 smtp:
   server: {{key "tsuru/smtp/server"}}
@@ -25,7 +25,7 @@ smtp:
 repo-manager: {{key "tsuru/repo-manager" | regexReplaceAll "^$" "none" }}{{if key "tsuru/repo-manager"}}
 git:
   unit-repo: {{key "tsuru/git/unit-repo" | regexReplaceAll "^$" "/home/application/current" }}
-  api-server: {{range service "mongo"}}{{.Name}}:{{.Port}}{{end}}{{end}}
+  api-server: {{key "tsuru/git/api-server" | regexReplaceAll "^$" "git.tsuru.example.com" }}{{end}}
 
 log:
   file: {{key "tsuru/log/file" | regexReplaceAll "^$" "/var/log/tsuru.log" }}
@@ -50,7 +50,7 @@ auth:
     callback-port: {{key "tsuru/auth/oauth/callback-port"}}{{end}}
 
 queue:
-  mongo-url: {{range service "mongo"}}{{.Address}}:{{.Port}}{{end}}
+  mongo-url: {{if key "tsuru/database/user"}}mongodb://{{end}}{{key "tsuru/database/user"}}{{if key "tsuru/database/password"}}:{{end}}{{key "tsuru/database/password"}}{{if key "tsuru/database/user"}}@{{end}}{{range $index, $service := service "mongo" "any"}}{{if ne $index 0}},{{end}}{{.Address}}:{{.Port}}{{end}}{{if key "tsuru/database/user"}}/{{end}}{{key "tsuru/database/name" | regexReplaceAll "^$" "tsurudb" }}{{if key "tsuru/database/maxpoolsize"}}?maxPoolSize={{end}}{{key "tsuru/database/maxpoolsize"}}
   mongo-database: queuedb
 
 pubsub:
@@ -73,7 +73,7 @@ docker:
   segregate: {{key "tsuru/docker/segregate" | regexReplaceAll "^$" "true" }}
   cluster:
     storage: {{key "tsuru/docker/cluster/storage" | regexReplaceAll "^$" "mongodb" }}
-    mongo-url: {{range service "mongo"}}{{.Address}}:{{.Port}}{{end}}
+    mongo-url: {{if key "tsuru/database/user"}}mongodb://{{end}}{{key "tsuru/database/user"}}{{if key "tsuru/database/password"}}:{{end}}{{key "tsuru/database/password"}}{{if key "tsuru/database/user"}}@{{end}}{{range $index, $service := service "mongo" "any"}}{{if ne $index 0}},{{end}}{{.Address}}:{{.Port}}{{end}}{{if key "tsuru/database/user"}}/{{end}}{{key "tsuru/docker/cluster/mongo-database" | regexReplaceAll "^$" "dockercluster" }}{{if key "tsuru/database/maxpoolsize"}}?maxPoolSize={{end}}{{key "tsuru/database/maxpoolsize"}}
     mongo-database: {{key "tsuru/docker/cluster/mongo-database" | regexReplaceAll "^$" "dockercluster" }}
   run-cmd:
     bin: {{key "tsuru/docker/run-cmd/bin" | regexReplaceAll "^$" "/var/lib/tsuru/start" }}
@@ -87,5 +87,4 @@ routers:{{range ls "tsuru/routers"}}
   hipache:
     type: hipache
     domain: router-hipache.service.consul
-    redis-server: {{range service "redis"}}{{.Address}}:{{.Port}}{{else}}{{key "tsuru/routers/hipache/redis-server"}}{{end}}{{end}}
-    
+    redis-server: redis.service.consul:6379{{end}}
