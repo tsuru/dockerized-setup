@@ -19,28 +19,31 @@
   $ eval "$(docker-machine env docker01)"
 
   $ docker run -d -v /data/consul:/data/consul \
-      --restart=always \
-      -p 8300:8300 \
-      -p 8301:8301 \
-      -p 8301:8301/udp \
-      -p 8302:8302 \
-      -p 8302:8302/udp \
-      -p 8400:8400 \
-      -p 8500:8500 \
-      -p 53:53/udp \
-      progrium/consul -server -advertise `docker-machine ip docker01` -bootstrap
+    --name consul \
+    --restart=always \
+    -p 8300:8300 \
+    -p 8301:8301 \
+    -p 8301:8301/udp \
+    -p 8302:8302 \
+    -p 8302:8302/udp \
+    -p 8400:8400 \
+    -p 8500:8500 \
+    -p 53:53/udp \
+    progrium/consul -server -advertise `docker-machine ip docker01` -bootstrap
   ```
 ### Consul registrator  
 
   ```bash
   $ docker run -d -v /var/run/docker.sock:/tmp/docker.sock \
-      --restart=always \
-      gliderlabs/registrator -ip `docker-machine ip docker01` -resync 5 consul://`docker-machine ip docker01`:8500
+    --name registrator \
+    --restart=always \
+    gliderlabs/registrator -ip `docker-machine ip docker01` -resync 5 consul://`docker-machine ip docker01`:8500
   ```
 
 ### Consul template
   ```bash
   $ docker run -d \
+    --name consul-template \
     -l name="consul-template" \
     -v /var/run/docker.sock:/tmp/docker.sock \
     -v /data/tsuru:/data/tsuru \
@@ -52,25 +55,24 @@
 
 ### MongoDB
   ```bash
-  $ docker run -d -e SERVICE_ID="mongo" -p 27017:27017 mongo --replSet rStsuru \
-    mongo --eval "JSON.stringify(rs.initiate());" \
-    mongo --eval "JSON.stringify(rs.add('mongo01:27017'))"
+  $ docker run -d --name mongo -e SERVICE_ID="mongo" -p 27017:27017 mongo --replSet rStsuru \
   ```
 ### Redis
   ```bash
-  $ docker run -d -e SERVICE_ID="redis" -p 6379:6379 redis
+  $ docker run -d --name redis -e SERVICE_ID="redis" -p 6379:6379 redis
   ```
 ### Docker Registry
   ```bash
-  $ docker run -d -e SERVICE_ID="registry" -p 5000:5000 registry
+  $ docker run -d --name registry -e SERVICE_ID="registry" -p 5000:5000 registry
   ```
 ### Router
   ```bash
-  $ docker run -d -e SERVICE_ID="router-hipache" -p 8080:8080 tsuru/router-hipache
+  $ docker run -d --name router-hipache -e SERVICE_ID="router-hipache" -p 8080:8080 tsuru/router-hipache
   ```
 ### Tsuru API
   ```bash
   $ docker run -d \
+    --name tsuru-api \
     -l name="tsuru-api" \
     -e SERVICE_ID="tsuru-api" \
     -p 8000:8000 \
@@ -247,7 +249,7 @@
   ```bash
   $ eval "$(docker-machine env docker01)"
   $ docker run -d \
-    --name tsuru-api
+    --name tsuru-api \
     -l name="tsuru-api" \
     -e SERVICE_ID="tsuru-api" \
     -p 8000:8000 \
@@ -256,7 +258,7 @@
 
   $ eval "$(docker-machine env docker02)"
   $ docker run -d \
-    --name tsuru-api
+    --name tsuru-api \
     -l name="tsuru-api" \
     -e SERVICE_ID="tsuru-api" \
     -p 8000:8000 \
@@ -265,7 +267,7 @@
 
   $ eval "$(docker-machine env docker03)"
   $ docker run -d \
-    --name tsuru-api
+    --name tsuru-api \
     -l name="tsuru-api" \
     -e SERVICE_ID="tsuru-api" \
     -p 8000:8000 \
