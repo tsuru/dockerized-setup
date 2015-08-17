@@ -239,13 +239,19 @@ If you used this tutorial to start a single host, just use the steps to start do
 ### Router
   ```bash
   $ eval "$(docker-machine env docker01)"
-  $ docker run -d --name router-hipache -e SERVICE_ID="router-hipache" -p 8080:8080 tsuru/router-hipache
+  $ docker run -d --name router-hipache \
+    -v /data/router:/data/router \
+    -e SERVICE_ID="router-hipache" -p 8080:8080 tsuru/router-hipache
 
   $ eval "$(docker-machine env docker02)"
-  $ docker run -d --name router-hipache -e SERVICE_ID="router-hipache" -p 8080:8080 tsuru/router-hipache
+  $ docker run -d --name router-hipache \
+    -v /data/router:/data/router \
+    -e SERVICE_ID="router-hipache" -p 8080:8080 tsuru/router-hipache
 
   $ eval "$(docker-machine env docker03)"
-  $ docker run -d --name router-hipache -e SERVICE_ID="router-hipache" -p 8080:8080 tsuru/router-hipache
+  $ docker run -d --name router-hipache \
+    -v /data/router:/data/router \
+    -e SERVICE_ID="router-hipache" -p 8080:8080 tsuru/router-hipache
   ```
 ### Tsuru API
   ```bash
