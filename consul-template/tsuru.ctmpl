@@ -1,8 +1,8 @@
-listen: {{key "tsuru/listen" | regexReplaceAll "^$" "0.0.0.0:8000" }}
-host: {{key "tsuru/host" | regexReplaceAll "^$" "tsuru.example.com:8000" }}
-debug: {{key "tsuru/debug" | regexReplaceAll "^$" "false" }}
-disable-index-page: {{key "tsuru/disable-index-page" | regexReplaceAll "^$" "false" }}
-admin-team: {{key "tsuru/admin-team" | regexReplaceAll "^$" "admin" }}
+listen: {{if key "tsuru/listen"}}"{{key "tsuru/listen"}}"{{else}}"0.0.0.0:8000"{{end}}
+host: {{if key "tsuru/host"}}"{{key "tsuru/host"}}"{{else}}"tsuru.example.com:8000"{{end}}
+debug: {{if key "tsuru/debug"}}{{key "tsuru/debug"}}{{else}}false{{end}}
+disable-index-page: {{if key "tsuru/disable-index-page"}}{{key "tsuru/disable-index-page"}}{{else}}false{{end}}
+admin-team: {{if key "tsuru/admin-team"}}{{key "tsuru/admin-team"}}{{else}}admin{{end}}
 {{if key "tsuru/units-per-app"}}
 quota:
   units-per-app: {{key "tsuru/units-per-app"}}
@@ -13,32 +13,32 @@ tls:
   cert-file: {{key "tsuru/tls/cert-file"}}
   key-file: {{key "tsuru/tls/key-file"}}{{end}}
 database:
-  url: {{if key "tsuru/database/user"}}mongodb://{{end}}{{key "tsuru/database/user"}}{{if key "tsuru/database/password"}}:{{end}}{{key "tsuru/database/password"}}{{if key "tsuru/database/user"}}@{{end}}{{range $index, $service := service "mongo" "any"}}{{if ne $index 0}},{{end}}{{.Address}}:{{.Port}}{{end}}{{if key "tsuru/database/user"}}/{{end}}{{key "tsuru/database/name" | regexReplaceAll "^$" "tsurudb" }}{{if key "tsuru/database/maxpoolsize"}}?maxPoolSize={{end}}{{key "tsuru/database/maxpoolsize"}}
-  name: {{key "tsuru/database/name" | regexReplaceAll "^$" "tsurudb" }}{{if service "mongo-log"}}
-  logdb-url: {{if key "tsuru/database/logdb-user"}}mongodb://{{end}}{{key "tsuru/database/logdb-user"}}{{if key "tsuru/database/logdb-password"}}:{{end}}{{key "tsuru/database/logdb-password"}}{{if key "tsuru/database/logdb-user"}}@{{end}}{{range $index, $service := service "mongo-log" "any"}}{{if ne $index 0}},{{end}}{{.Address}}:{{.Port}}{{end}}{{if key "tsuru/database/logdb-user"}}/{{end}}{{key "tsuru/database/logdb-name" | regexReplaceAll "^$" "tsurudb" }}{{if key "tsuru/database/logdb-maxpoolsize"}}?maxPoolSize={{end}}{{key "tsuru/database/logdb-maxpoolsize"}}
-  logdb-name: {{key "tsuru/database/logdb-name" | regexReplaceAll "^$" "tsurudb" }}{{end}}{{if key "tsuru/smtp/server"}}
+  url: {{if key "tsuru/database/user"}}mongodb://{{end}}{{key "tsuru/database/user"}}{{if key "tsuru/database/password"}}:{{end}}{{key "tsuru/database/password"}}{{if key "tsuru/database/user"}}@{{end}}{{range $index, $service := service "mongo" "any"}}{{if ne $index 0}},{{end}}{{.Address}}:{{.Port}}{{end}}{{if key "tsuru/database/user"}}/{{end}}{{if key "tsuru/database/name"}}{{key "tsuru/database/name"}}{{else}}tsurudb{{end}}{{if key "tsuru/database/maxpoolsize"}}?maxPoolSize={{end}}{{key "tsuru/database/maxpoolsize"}}
+  name: {{if key "tsuru/database/name"}}{{key "tsuru/database/name"}}{{else}}tsurudb{{end}}{{if service "mongo-log"}}
+  logdb-url: {{if key "tsuru/database/logdb-user"}}mongodb://{{end}}{{key "tsuru/database/logdb-user"}}{{if key "tsuru/database/logdb-password"}}:{{end}}{{key "tsuru/database/logdb-password"}}{{if key "tsuru/database/logdb-user"}}@{{end}}{{range $index, $service := service "mongo-log" "any"}}{{if ne $index 0}},{{end}}{{.Address}}:{{.Port}}{{end}}{{if key "tsuru/database/logdb-user"}}/{{end}}{{if key "tsuru/database/logdb-name"}}{{key "tsuru/database/logdb-name"}}{{else}}tsurudb{{end}}{{if key "tsuru/database/logdb-maxpoolsize"}}?maxPoolSize={{end}}{{key "tsuru/database/logdb-maxpoolsize"}}
+  logdb-name: {{if key "tsuru/database/logdb-name"}}{{key "tsuru/database/logdb-name"}}{{else}}tsurudb{{end}}{{end}}{{if key "tsuru/smtp/server"}}
 smtp:
   server: {{key "tsuru/smtp/server"}}
   user: {{key "tsuru/smtp/user"}}
   password: {{key "tsuru/smtp/password"}}{{end}}
 
-repo-manager: {{key "tsuru/repo-manager" | regexReplaceAll "^$" "none" }}{{if key "tsuru/repo-manager"}}
+repo-manager: {{if key "tsuru/repo-manager"}}{{key "tsuru/repo-manager"}}{{else}}none{{end}}{{if key "tsuru/repo-manager"}}
 git:
-  unit-repo: {{key "tsuru/git/unit-repo" | regexReplaceAll "^$" "/home/application/current" }}
-  api-server: {{key "tsuru/git/api-server" | regexReplaceAll "^$" "git.tsuru.example.com" }}{{end}}
+  unit-repo: {{if key "tsuru/git/unit-repo"}}{{key "tsuru/git/unit-repo"}}{{else}}/home/application/current{{end}}
+  api-server: {{if key "tsuru/git/api-server"}}{{key "tsuru/git/api-server"}}{{else}}git.tsuru.example.com{{end}}{{end}}
 
 log:
-  file: {{key "tsuru/log/file" | regexReplaceAll "^$" "/var/log/tsuru.log" }}
-  disable-syslog: {{key "tsuru/log/disable-syslog" | regexReplaceAll "^$" "true" }}
-  syslog-tag: {{key "tsuru/log/syslog-tag" | regexReplaceAll "^$" "tsr" }}
-  use-stderr: {{key "tsuru/log/use-stderr" | regexReplaceAll "^$" "false" }}
+  file: {{if key "tsuru/log/file"}}{{key "tsuru/log/file"}}{{else}}/var/log/tsuru.log{{end}}
+  disable-syslog: {{if key "tsuru/log/disable-syslog"}}{{key "tsuru/log/disable-syslog"}}{{else}}true{{end}}
+  syslog-tag: {{if key "tsuru/log/syslog-tag"}}{{key "tsuru/log/syslog-tag"}}{{else}}tsr{{end}}
+  use-stderr: {{if key "tsuru/log/use-stderr"}}{{key "tsuru/log/use-stderr"}}{{else}}false{{end}}
 
 auth:
-  scheme: {{key "tsuru/auth/scheme" | regexReplaceAll "^$" "native" }}
-  user-registration: {{key "tsuru/auth/user-registration" | regexReplaceAll "^$" "true" }}
-  hash-cost: {{key "tsuru/auth/hash-cost" | regexReplaceAll "^$" "4" }}
-  token-expire-days: {{key "tsuru/auth/token-expire-days" | regexReplaceAll "^$" "7" }}
-  max-simultaneous-sessions: {{key "tsuru/auth/max-simultaneous-sessions" | regexReplaceAll "^$" "unlimited" }}{{if key "tsuru/auth/scheme"}}
+  scheme: {{if key "tsuru/auth/scheme"}}{{key "tsuru/auth/scheme"}}{{else}}native{{end}}
+  user-registration: {{if key "tsuru/auth/user-registration"}}{{key "tsuru/auth/user-registration"}}{{else}}true{{end}}
+  hash-cost: {{if key "tsuru/auth/hash-cost"}}{{key "tsuru/auth/hash-cost"}}{{else}}4{{end}}
+  token-expire-days: {{if key "tsuru/auth/token-expire-days"}}{{key "tsuru/auth/token-expire-days"}}{{else}}7{{end}}
+  max-simultaneous-sessions: {{if key "tsuru/auth/max-simultaneous-sessions"}}{{key "tsuru/auth/max-simultaneous-sessions"}}{{else}}unlimited{{end}}{{if key "tsuru/auth/scheme"}}
   oauth:
     client-id: {{key "tsuru/auth/oauth/client-id"}}
     client-secret: {{key "tsuru/auth/oauth/client-secret"}}
@@ -50,37 +50,37 @@ auth:
     callback-port: {{key "tsuru/auth/oauth/callback-port"}}{{end}}
 
 queue:
-  mongo-url: {{if key "tsuru/database/user"}}mongodb://{{end}}{{key "tsuru/database/user"}}{{if key "tsuru/database/password"}}:{{end}}{{key "tsuru/database/password"}}{{if key "tsuru/database/user"}}@{{end}}{{range $index, $service := service "mongo" "any"}}{{if ne $index 0}},{{end}}{{.Address}}:{{.Port}}{{end}}{{if key "tsuru/database/user"}}/{{end}}{{key "tsuru/database/name" | regexReplaceAll "^$" "tsurudb" }}{{if key "tsuru/database/maxpoolsize"}}?maxPoolSize={{end}}{{key "tsuru/database/maxpoolsize"}}
-  mongo-database: queuedb
+  mongo-url: {{if key "tsuru/database/user"}}mongodb://{{end}}{{key "tsuru/database/user"}}{{if key "tsuru/database/password"}}:{{end}}{{key "tsuru/database/password"}}{{if key "tsuru/database/user"}}@{{end}}{{range $index, $service := service "mongo" "any"}}{{if ne $index 0}},{{end}}{{.Address}}:{{.Port}}{{end}}{{if key "tsuru/database/user"}}/{{end}}{{if key "tsuru/queue/mongo-database"}}{{key "tsuru/queue/mongo-database"}}{{else}}queuedb{{end}}{{if key "tsuru/database/maxpoolsize"}}?maxPoolSize={{end}}{{key "tsuru/database/maxpoolsize"}}
+  mongo-database: {{if key "tsuru/queue/mongo-database"}}{{key "tsuru/queue/mongo-database"}}{{else}}queuedb{{end}}
 
 pubsub:
   redis-host: {{range service "redis"}}{{.Address}}{{end}}
   redis-port: {{range service "redis"}}{{.Port}}{{end}}{{if key "tsuru/pubsub/redis-password"}}
   redis-password: {{key "tsuru/pubsub/redis-password"}}{{end}}
-  redis-db: {{key "tsuru/pubsub/redis-db" | regexReplaceAll "^$" "3" }}
-  pool-max-idle-conn: {{key "tsuru/pubsub/pool-max-idle-conn" | regexReplaceAll "^$" "20" }}
-  pool-idle-timeout: {{key "tsuru/pubsub/pool-idle-timeout" | regexReplaceAll "^$" "300" }}
-  redis-dial-timeout: {{key "tsuru/pubsub/redis-dial-timeout" | regexReplaceAll "^$" "0.1" }}
-  redis-read-timeout: {{key "tsuru/pubsub/redis-read-timeout" | regexReplaceAll "^$" "1800" }}
-  redis-write-timeout: {{key "tsuru/pubsub/redis-write-timeout" | regexReplaceAll "^$" "0.5" }}
+  redis-db: {{if key "tsuru/pubsub/redis-db"}}{{key "tsuru/pubsub/redis-db"}}{{else}}3{{end}}
+  pool-max-idle-conn: {{if key "tsuru/pubsub/pool-max-idle-conn"}}{{key "tsuru/pubsub/pool-max-idle-conn"}}{{else}}20{{end}}
+  pool-idle-timeout: {{if key "tsuru/pubsub/pool-idle-timeout"}}{{key "tsuru/pubsub/pool-idle-timeout"}}{{else}}300{{end}}
+  redis-dial-timeout: {{if key "tsuru/pubsub/redis-dial-timeout"}}{{key "tsuru/pubsub/redis-dial-timeout"}}{{else}}0.1{{end}}
+  redis-read-timeout: {{if key "tsuru/pubsub/redis-read-timeout"}}{{key "tsuru/pubsub/redis-read-timeout"}}{{else}}1800{{end}}
+  redis-write-timeout: {{if key "tsuru/pubsub/redis-write-timeout"}}{{key "tsuru/pubsub/redis-write-timeout"}}{{else}}0.5{{end}}
 
 docker:
   collection: docker_containers
-  registry: {{key "tsuru/docker/registry" | regexReplaceAll "^$" "registry.service.consul:5000" }}
-  repository-namespace: {{key "tsuru/docker/repository-namespace" | regexReplaceAll "^$" "tsuru" }}
-  router: {{key "tsuru/docker/router" | regexReplaceAll "^$" "hipache" }}
-  deploy-cmd: {{key "tsuru/docker/deploy-cmd" | regexReplaceAll "^$" "/var/lib/tsuru/deploy" }}
-  segregate: {{key "tsuru/docker/segregate" | regexReplaceAll "^$" "true" }}
+  registry: {{if key "tsuru/docker/registry"}}{{key "tsuru/docker/registry"}}{{else}}registry.service.consul:5000{{end}}
+  repository-namespace: {{if key "tsuru/docker/repository-namespace"}}{{key "tsuru/docker/repository-namespace"}}{{else}}tsuru{{end}}
+  router: {{if key "tsuru/docker/router"}}{{key "tsuru/docker/router"}}{{else}}hipache{{end}}
+  deploy-cmd: {{if key "tsuru/docker/deploy-cmd"}}{{key "tsuru/docker/deploy-cmd"}}{{else}}/var/lib/tsuru/deploy{{end}}
+  segregate: {{if key "tsuru/docker/segregate"}}{{key "tsuru/docker/segregate"}}{{else}}true{{end}}
   cluster:
-    storage: {{key "tsuru/docker/cluster/storage" | regexReplaceAll "^$" "mongodb" }}
-    mongo-url: {{if key "tsuru/database/user"}}mongodb://{{end}}{{key "tsuru/database/user"}}{{if key "tsuru/database/password"}}:{{end}}{{key "tsuru/database/password"}}{{if key "tsuru/database/user"}}@{{end}}{{range $index, $service := service "mongo" "any"}}{{if ne $index 0}},{{end}}{{.Address}}:{{.Port}}{{end}}{{if key "tsuru/database/user"}}/{{end}}{{key "tsuru/docker/cluster/mongo-database" | regexReplaceAll "^$" "dockercluster" }}{{if key "tsuru/database/maxpoolsize"}}?maxPoolSize={{end}}{{key "tsuru/database/maxpoolsize"}}
-    mongo-database: {{key "tsuru/docker/cluster/mongo-database" | regexReplaceAll "^$" "dockercluster" }}
+    storage: {{if key "tsuru/docker/cluster/storage"}}{{key "tsuru/docker/cluster/storage"}}{{else}}mongodb{{end}}
+    mongo-url: {{if key "tsuru/database/user"}}mongodb://{{end}}{{key "tsuru/database/user"}}{{if key "tsuru/database/password"}}:{{end}}{{key "tsuru/database/password"}}{{if key "tsuru/database/user"}}@{{end}}{{range $index, $service := service "mongo" "any"}}{{if ne $index 0}},{{end}}{{.Address}}:{{.Port}}{{end}}{{if key "tsuru/database/user"}}/{{end}}{{if key "tsuru/docker/cluster/mongo-database"}}{{key "tsuru/docker/cluster/mongo-database"}}{{else}}dockercluster{{end}}{{if key "tsuru/database/maxpoolsize"}}?maxPoolSize={{end}}{{key "tsuru/database/maxpoolsize"}}
+    mongo-database: {{if key "tsuru/docker/cluster/mongo-database"}}{{key "tsuru/docker/cluster/mongo-database"}}{{else}}dockercluster{{end}}
   run-cmd:
-    bin: {{key "tsuru/docker/run-cmd/bin" | regexReplaceAll "^$" "/var/lib/tsuru/start" }}
-    port: {{key "tsuru/docker/run-cmd/port" | regexReplaceAll "^$" "8888" }}
+    bin: {{if key "tsuru/docker/run-cmd/bin"}}{{key "tsuru/docker/run-cmd/bin"}}{{else}}/var/lib/tsuru/start{{end}}
+    port: {{if key "tsuru/docker/run-cmd/port"}}{{key "tsuru/docker/run-cmd/port"}}{{else}}8888{{end}}
   ssh:
-    add-key-cmd: {{key "tsuru/docker/ssh/add-key-cmd" | regexReplaceAll "^$" "/var/lib/tsuru/add-key" }}
-    user: {{key "tsuru/docker/ssh/user" | regexReplaceAll "^$" "ubuntu" }}
+    add-key-cmd: {{if key "tsuru/docker/ssh/add-key-cmd"}}{{key "tsuru/docker/ssh/add-key-cmd"}}{{else}}/var/lib/tsuru/add-key{{end}}
+    user: {{if key "tsuru/docker/ssh/user"}}{{key "tsuru/docker/ssh/user"}}{{else}}ubuntu{{end}}
 
 routers:{{range ls "tsuru/routers"}}
   {{.Value}}{{else}}
