@@ -82,6 +82,8 @@
 
 # 3 machines HA Deployment
 
+If you used this tutorial to start a single host, just use the steps to start docker02 and docker03
+
 ## Install machines
   ```bash
   $ docker-machine create \
