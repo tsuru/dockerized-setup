@@ -88,3 +88,14 @@ routers:{{range ls "tsuru/routers"}}
     type: hipache
     domain: router-hipache.service.consul
     redis-server: redis.service.consul:6379{{end}}
+
+{{if key "tsuru/iaas/default"}}
+iaas:
+  default: {{key "tsuru/iaas/default"}}
+  node-protocol: {{if key "tsuru/iaas/node-protocol"}}{{key "tsuru/iaas/node-protocol"}}{{else}}http{{end}}
+  node-port: {{if key "tsuru/iaas/node-port"}}{{key "tsuru/iaas/node-port"}}{{else}}2375{{end}}
+  collection: {{if key "tsuru/iaas/collection"}}{{key "tsuru/iaas/collection"}}{{else}}iaas_machines{{end}}
+  {{if key "tsuru/iaas/custom/config"}}custom:{{end}}{{range ls "tsuru/iaas/custom"}}
+    {{.Value}}{{end}}
+  {{range ls "tsuru/iaas/ec2"}}{{.Value}}{{end}}
+  {{range ls "tsuru/iaas/cloudstack"}}{{.Value}}{{end}}{{end}}
