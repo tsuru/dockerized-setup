@@ -55,7 +55,7 @@
 
 ### MongoDB
   ```bash
-  $ docker run -d --name mongo -e SERVICE_ID="mongo" -p 27017:27017 mongo --replSet rStsuru \
+  $ docker run -d --name mongo -e SERVICE_ID="mongo" -p 27017:27017 mongo --replSet rStsuru
   ```
 ### Redis
   ```bash
