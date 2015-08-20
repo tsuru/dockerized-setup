@@ -73,7 +73,7 @@ docker:
   segregate: {{if key "tsuru/docker/segregate"}}{{key "tsuru/docker/segregate"}}{{else}}true{{end}}
   cluster:
     storage: {{if key "tsuru/docker/cluster/storage"}}{{key "tsuru/docker/cluster/storage"}}{{else}}mongodb{{end}}
-    mongo-url: mongodb://{{if key "tsuru/database/user"}}{{key "tsuru/database/user"}}{{end}}{{if key "tsuru/database/password"}}:{{key "tsuru/database/password"}}{{end}}{{if key "tsuru/database/user"}}@{{end}}{{range $index, $service := service "mongo" "any"}}{{if ne $index 0}},{{end}}{{.Address}}:{{.Port}}{{end}}/{{if key "tsuru/docker/cluster/mongo-database"}}{{key "tsuru/docker/cluster/mongo-database"}}{{else}}dockercluster{{end}}{{if key "tsuru/database/maxpoolsize"}}?maxPoolSize={{key "tsuru/database/maxpoolsize"}}{{end}}
+    mongo-url: {{range $index, $service := service "mongo" "any"}}{{if ne $index 0}},{{end}}{{.Address}}:{{.Port}}{{end}}
     mongo-database: {{if key "tsuru/docker/cluster/mongo-database"}}{{key "tsuru/docker/cluster/mongo-database"}}{{else}}dockercluster{{end}}
   run-cmd:
     bin: {{if key "tsuru/docker/run-cmd/bin"}}{{key "tsuru/docker/run-cmd/bin"}}{{else}}/var/lib/tsuru/start{{end}}

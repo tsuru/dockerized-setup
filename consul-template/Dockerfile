@@ -12,9 +12,13 @@ ADD ./consul-template.conf /etc/consul-template.conf
 ADD ./tsuru.ctmpl /tmp/tsuru.ctmpl
 ADD ./redis.ctmpl /tmp/redis.ctmpl
 ADD ./hipache.ctmpl /tmp/hipache.ctmpl
+ADD ./gandalf.ctmpl /tmp/gandalf.ctmpl
+ADD ./post-receive.ctmpl /tmp/post-receive.ctmpl
+ADD ./pre-receive.ctmpl /tmp/pre-receive.ctmpl
 
 VOLUME /data/tsuru
 VOLUME /data/router
+VOLUME /data/gandalf
 
 ENV DOCKER_HOST unix:///tmp/docker.sock
 

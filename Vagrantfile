@@ -10,6 +10,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provision "shell",
     inline: "wget -qO- https://get.docker.com/ | sh ; sudo usermod -aG docker vagrant"
+  # Allow Mac OS X docker client to connect to Docker without TLS auth
+  # config.vm.provision "shell",
+    # inline: "sudo bash -c \'echo \"DOCKER_TLS=no\" > /etc/default/docker\'"
+  # config.vm.provision "shell",
+    # inline: "sudo bash -c \'echo \"DOCKER_OPTS=\'"-H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock -r --insecure-registry registry.service.consul:5000"\'\" >> /etc/default/docker\'"
+  # config.vm.provision "shell",
+  #   inline: "sudo stop docker && sudo start docker"
 
   config.vm.define :default do |tsuru|
     tsuru.vm.hostname = 'tsuru'

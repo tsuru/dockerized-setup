@@ -48,6 +48,7 @@
     -v /var/run/docker.sock:/tmp/docker.sock \
     -v /data/tsuru:/data/tsuru \
     -v /data/router:/data/router \
+    -v /data/gandalf:/data/gandalf \
     tsuru/consul-template
   ```
 
@@ -77,7 +78,18 @@
     -e SERVICE_ID="tsuru-api" \
     -p 8000:8000 \
     -v /data/tsuru:/data/tsuru \
-    tsuru/tsuru-api
+    tsuru/tsuru-api api --config=/data/tsuru/tsuru.conf
+  ```
+### Gandalf
+  ```bash
+  $ docker run -d \
+    --name gandalf \
+    -l name="gandalf" \
+    -e SERVICE_ID="gandalf" \
+    -p 8001:8001 \
+    -v /data/gandalf:/data/gandalf \
+    -v /var/run/docker.sock:/tmp/docker.sock \
+    tsuru/gandalf
   ```
 
 # 3 machines HA Deployment
@@ -262,7 +274,7 @@ If you used this tutorial to start a single host, just use the steps to start do
     -e SERVICE_ID="tsuru-api" \
     -p 8000:8000 \
     -v /data/tsuru:/data/tsuru \
-    tsuru/tsuru-api
+    tsuru/tsuru-api api --config=/data/tsuru/tsuru.conf
 
   $ eval "$(docker-machine env docker02)"
   $ docker run -d \
@@ -271,7 +283,7 @@ If you used this tutorial to start a single host, just use the steps to start do
     -e SERVICE_ID="tsuru-api" \
     -p 8000:8000 \
     -v /data/tsuru:/data/tsuru \
-    tsuru/tsuru-api
+    tsuru/tsuru-api api --config=/data/tsuru/tsuru.conf
 
   $ eval "$(docker-machine env docker03)"
   $ docker run -d \
@@ -280,5 +292,5 @@ If you used this tutorial to start a single host, just use the steps to start do
     -e SERVICE_ID="tsuru-api" \
     -p 8000:8000 \
     -v /data/tsuru:/data/tsuru \
-    tsuru/tsuru-api
+    tsuru/tsuru-api api --config=/data/tsuru/tsuru.conf
   ```

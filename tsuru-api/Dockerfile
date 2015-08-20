@@ -15,4 +15,4 @@ VOLUME /data/tsuru
 
 LABEL name="tsuru-api"
 
-ENTRYPOINT /usr/bin/tsr api --config=/data/tsuru/tsuru.conf
+ENTRYPOINT ["/usr/bin/tsr"]
