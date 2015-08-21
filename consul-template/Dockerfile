@@ -15,10 +15,12 @@ ADD ./hipache.ctmpl /tmp/hipache.ctmpl
 ADD ./gandalf.ctmpl /tmp/gandalf.ctmpl
 ADD ./post-receive.ctmpl /tmp/post-receive.ctmpl
 ADD ./pre-receive.ctmpl /tmp/pre-receive.ctmpl
+ADD ./archive-server.ctmpl /tmp/archive-server.ctmpl
 
 VOLUME /data/tsuru
 VOLUME /data/router
 VOLUME /data/gandalf
+VOLUME /data/archive-server
 
 ENV DOCKER_HOST unix:///tmp/docker.sock
 
