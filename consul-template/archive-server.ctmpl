@@ -1,0 +1,8 @@
+#!/bin/bash
+
+READ_HTTP=0.0.0.0:3032
+WRITE_HTTP=0.0.0.0:3031
+ARCHIVE_DIR=/data/archive-server/archives
+MONGODB_SERVER=mongodb://{{if key "tsuru/database/user"}}{{key "tsuru/database/user"}}{{end}}{{if key "tsuru/database/password"}}:{{key "tsuru/database/password"}}{{end}}{{if key "tsuru/database/user"}}@{{end}}{{range $index, $service := service "mongo" "any"}}{{if ne $index 0}},{{end}}{{.Address}}:{{.Port}}{{end}}/{{if key "archive-server/database/name"}}{{key "archive-server/database/name"}}{{else}}archive-server{{end}}{{if key "tsuru/database/maxpoolsize"}}?maxPoolSize={{key "tsuru/database/maxpoolsize"}}{{end}}
+MONGODB_DB_NAME=archives
+export ARCHIVE_SERVER_OPTS="-dir=${ARCHIVE_DIR} -read-http=${READ_HTTP} -write-http=${WRITE_HTTP} -mongodb=${MONGODB_SERVER} -dbname=${MONGODB_DB_NAME}"
