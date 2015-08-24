@@ -20,6 +20,7 @@
 
   $ docker run -d -v /data/consul:/data/consul \
     --name consul \
+    -e SERVICE_NAME="consul" \
     --restart=always \
     -p 8300:8300 \
     -p 8301:8301 \
@@ -36,6 +37,7 @@
   ```bash
   $ docker run -d -v /var/run/docker.sock:/tmp/docker.sock \
     --name registrator \
+    -e SERVICE_NAME="registrator" \
     --restart=always \
     gliderlabs/registrator -ip `docker-machine ip docker01` -resync 5 consul://`docker-machine ip docker01`:8500
   ```
@@ -43,9 +45,9 @@
 ### Consul template
   ```bash
   $ docker run -d \
-    --restart=always \
     --name consul-template \
-    -l name="consul-template" \
+    -e SERVICE_NAME="consul-template" \
+    --restart=always \
     -v /var/run/docker.sock:/tmp/docker.sock \
     -v /data/tsuru:/data/tsuru \
     -v /data/router:/data/router \
@@ -58,26 +60,46 @@
 
 ### MongoDB
   ```bash
-  $ docker run -d --restart=always --name mongo -e SERVICE_NAME="mongo" -p 27017:27017 mongo --replSet rStsuru
+  $ docker run -d \
+    --name mongo \
+    -e SERVICE_NAME="mongo"
+    --restart=always \
+    -p 27017:27017 \
+    mongo
   ```
 ### Redis
   ```bash
-  $ docker run -d --restart=always --name redis -e SERVICE_NAME="redis" -p 6379:6379 redis
+  $ docker run -d \
+    --name redis \
+    -e SERVICE_NAME="redis" \
+    --restart=always \
+    -p 6379:6379 \
+    redis
   ```
 ### Docker Registry
   ```bash
-  $ docker run -d --restart=always --name registry -e SERVICE_NAME="registry" -p 5000:5000 registry
+  $ docker run -d \
+    --name registry \
+    -e SERVICE_NAME="registry" \
+    --restart=always \
+    -p 5000:5000 \
+    registry
   ```
 ### Router
   ```bash
-  $ docker run -d --restart=always --name router-hipache -e SERVICE_NAME="router-hipache" -p 8080:8080 tsuru/router-hipache
+  $ docker run -d \
+    --name router-hipache \
+    -e SERVICE_NAME="router-hipache" \
+    --restart=always \
+    -p 8080:8080 \
+    tsuru/router-hipache
   ```
 ### Tsuru API
   ```bash
   $ docker run -d \
     --name tsuru-api \
-    -l name="tsuru-api" \
     -e SERVICE_NAME="tsuru-api" \
+    --restart=always \
     -p 8000:8000 \
     -v /data/tsuru:/data/tsuru \
     tsuru/tsuru-api api --config=/data/tsuru/tsuru.conf
@@ -86,8 +108,8 @@
   ```bash
   $ docker run -d \
     --name archive-server \
-    -l name="archive-server" \
     -e SERVICE_NAME="archive-server" \
+    --restart=always \
     -p 3031:3031 \
     -p 3032:3032 \
     -v /data/archive-server:/data/archive-server \
@@ -97,8 +119,8 @@
   ```bash
   $ docker run -d \
     --name gandalf \
-    -l name="gandalf" \
     -e SERVICE_NAME="gandalf" \
+    --restart=always \
     -p 8001:8001 \
     -v /data/gandalf:/data/gandalf \
     -v /data/tsuru:/data/tsuru \
@@ -107,8 +129,6 @@
   ```
 
 # 3 machines HA Deployment
-
-If you used this tutorial to start a single host, just use the steps to start docker02 and docker03
 
 ## Install machines
   ```bash
@@ -139,6 +159,7 @@ If you used this tutorial to start a single host, just use the steps to start do
   $ eval "$(docker-machine env docker01)"
   $ docker run -d -v /data/consul:/data/consul \
     --name consul \
+    -e SERVICE_NAME="consul" \
     --restart=always \
     -p 8300:8300 \
     -p 8301:8301 \
@@ -153,6 +174,7 @@ If you used this tutorial to start a single host, just use the steps to start do
   $ eval "$(docker-machine env docker02)"
   $ docker run -d -v /data/consul:/data/consul \
     --name consul \
+    -e SERVICE_NAME="consul" \
     --restart=always \
     -p 8300:8300 \
     -p 8301:8301 \
@@ -167,6 +189,7 @@ If you used this tutorial to start a single host, just use the steps to start do
   $ eval "$(docker-machine env docker03)"
   $ docker run -d -v /data/consul:/data/consul \
     --name consul \
+    -e SERVICE_NAME="consul" \
     --restart=always \
     -p 8300:8300 \
     -p 8301:8301 \
@@ -184,18 +207,21 @@ If you used this tutorial to start a single host, just use the steps to start do
   $ eval "$(docker-machine env docker01)"
   $ docker run -d -v /var/run/docker.sock:/tmp/docker.sock \
     --name registrator \
+    -e SERVICE_NAME="registrator" \
     --restart=always \
     gliderlabs/registrator -ip `docker-machine ip docker01` -resync 5 consul://`docker-machine ip docker01`:8500
 
   $ eval "$(docker-machine env docker02)"
   $ docker run -d -v /var/run/docker.sock:/tmp/docker.sock \
     --name registrator \
+    -e SERVICE_NAME="registrator" \
     --restart=always \
     gliderlabs/registrator -ip `docker-machine ip docker02` -resync 5 consul://`docker-machine ip docker02`:8500
 
   $ eval "$(docker-machine env docker03)"
   $ docker run -d -v /var/run/docker.sock:/tmp/docker.sock \
     --name registrator \
+    -e SERVICE_NAME="registrator" \
     --restart=always \
     gliderlabs/registrator -ip `docker-machine ip docker03` -resync 5 consul://`docker-machine ip docker03`:8500
   ```
@@ -205,7 +231,8 @@ If you used this tutorial to start a single host, just use the steps to start do
   $ eval "$(docker-machine env docker01)"
   $ docker run -d \
     --name consul-template \
-    -l name="consul-template" \
+    -e SERVICE_NAME="consul-template" \
+    --restart=always \
     -v /var/run/docker.sock:/tmp/docker.sock \
     -v /data/tsuru:/data/tsuru \
     -v /data/router:/data/router \
@@ -214,7 +241,8 @@ If you used this tutorial to start a single host, just use the steps to start do
   $ eval "$(docker-machine env docker02)"
   $ docker run -d \
     --name consul-template \
-    -l name="consul-template" \
+    -e SERVICE_NAME="consul-template" \
+    --restart=always \
     -v /var/run/docker.sock:/tmp/docker.sock \
     -v /data/tsuru:/data/tsuru \
     -v /data/router:/data/router \
@@ -223,7 +251,8 @@ If you used this tutorial to start a single host, just use the steps to start do
   $ eval "$(docker-machine env docker03)"
   $ docker run -d \
     --name consul-template \
-    -l name="consul-template" \
+    -e SERVICE_NAME="consul-template" \
+    --restart=always \
     -v /var/run/docker.sock:/tmp/docker.sock \
     -v /data/tsuru:/data/tsuru \
     -v /data/router:/data/router \
@@ -234,13 +263,28 @@ If you used this tutorial to start a single host, just use the steps to start do
 ### MongoDB
   ```bash
   $ eval "$(docker-machine env docker01)"
-  $ docker run -d --name mongo -e SERVICE_NAME="mongo" -p 27017:27017 mongo --replSet rStsuru
+  $ docker run -d \
+    --name mongo \
+    -e SERVICE_NAME="mongo"
+    --restart=always \
+    -p 27017:27017 \
+    mongo --replSet rStsuru
 
   $ eval "$(docker-machine env docker02)"
-  $ docker run -d --name mongo -e SERVICE_NAME="mongo" -p 27017:27017 mongo --replSet rStsuru
+  $ $ docker run -d \
+    --name mongo \
+    -e SERVICE_NAME="mongo"
+    --restart=always \
+    -p 27017:27017 \
+    mongo --replSet rStsuru
 
   $ eval "$(docker-machine env docker03)"
-  $ docker run -d --name mongo -e SERVICE_NAME="mongo" -p 27017:27017 mongo --replSet rStsuru
+  $ $ docker run -d \
+    --name mongo \
+    -e SERVICE_NAME="mongo"
+    --restart=always \
+    -p 27017:27017 \
+    mongo --replSet rStsuru
   $ docker exec mongo mongo --eval "JSON.stringify(rs.initiate());"
   $ docker exec mongo mongo --eval "JSON.stringify(rs.add('`docker-machine ip docker01`:27017'))"
   $ docker exec mongo mongo --eval "JSON.stringify(rs.add('`docker-machine ip docker02`:27017'))"
@@ -248,44 +292,76 @@ If you used this tutorial to start a single host, just use the steps to start do
 ### Redis (TODO - support redis cluster to implement HA)
   ```bash
   $ eval "$(docker-machine env docker01)"
-  $ docker run -d --name redis -e SERVICE_NAME="redis" -p 6379:6379 redis
+  $ docker run -d \
+    --name redis \
+    -e SERVICE_NAME="redis" \
+    --restart=always \
+    -p 6379:6379 \
+    redis
   ```
 ### Docker Registry
   ```bash
   $ eval "$(docker-machine env docker01)"
-  $ docker run -d --name registry -e SERVICE_NAME="registry" -p 5000:5000 registry
+  $ docker run -d \
+    --name registry \
+    -e SERVICE_NAME="registry" \
+    --restart=always \
+    -p 5000:5000 \
+    registry
 
   $ eval "$(docker-machine env docker02)"
-  $ docker run -d --name registry -e SERVICE_NAME="registry" -p 5000:5000 registry
+  $ docker run -d \
+    --name registry \
+    -e SERVICE_NAME="registry" \
+    --restart=always \
+    -p 5000:5000 \
+    registry
 
   $ eval "$(docker-machine env docker03)"
-  $ docker run -d --name registry -e SERVICE_NAME="registry" -p 5000:5000 registry
+  $ docker run -d \
+    --name registry \
+    -e SERVICE_NAME="registry" \
+    --restart=always \
+    -p 5000:5000 \
+    registry
 
   ```
 ### Router
   ```bash
   $ eval "$(docker-machine env docker01)"
-  $ docker run -d --name router-hipache \
+  $ docker run -d \
+    --name router-hipache \
+    -e SERVICE_NAME="router-hipache" \
+    --restart=always \
+    -p 8080:8080 \
     -v /data/router:/data/router \
-    -e SERVICE_NAME="router-hipache" -p 8080:8080 tsuru/router-hipache
+    tsuru/router-hipache
 
   $ eval "$(docker-machine env docker02)"
-  $ docker run -d --name router-hipache \
+  $ docker run -d \
+    --name router-hipache \
+    -e SERVICE_NAME="router-hipache" \
+    --restart=always \
+    -p 8080:8080 \
     -v /data/router:/data/router \
-    -e SERVICE_NAME="router-hipache" -p 8080:8080 tsuru/router-hipache
+    tsuru/router-hipache
 
   $ eval "$(docker-machine env docker03)"
-  $ docker run -d --name router-hipache \
+  $ docker run -d \
+    --name router-hipache \
+    -e SERVICE_NAME="router-hipache" \
+    --restart=always \
+    -p 8080:8080 \
     -v /data/router:/data/router \
-    -e SERVICE_NAME="router-hipache" -p 8080:8080 tsuru/router-hipache
+    tsuru/router-hipache
   ```
 ### Tsuru API
   ```bash
   $ eval "$(docker-machine env docker01)"
   $ docker run -d \
     --name tsuru-api \
-    -l name="tsuru-api" \
     -e SERVICE_NAME="tsuru-api" \
+    --restart=always \
     -p 8000:8000 \
     -v /data/tsuru:/data/tsuru \
     tsuru/tsuru-api api --config=/data/tsuru/tsuru.conf
@@ -293,8 +369,8 @@ If you used this tutorial to start a single host, just use the steps to start do
   $ eval "$(docker-machine env docker02)"
   $ docker run -d \
     --name tsuru-api \
-    -l name="tsuru-api" \
     -e SERVICE_NAME="tsuru-api" \
+    --restart=always \
     -p 8000:8000 \
     -v /data/tsuru:/data/tsuru \
     tsuru/tsuru-api api --config=/data/tsuru/tsuru.conf
@@ -302,8 +378,8 @@ If you used this tutorial to start a single host, just use the steps to start do
   $ eval "$(docker-machine env docker03)"
   $ docker run -d \
     --name tsuru-api \
-    -l name="tsuru-api" \
     -e SERVICE_NAME="tsuru-api" \
+    --restart=always \
     -p 8000:8000 \
     -v /data/tsuru:/data/tsuru \
     tsuru/tsuru-api api --config=/data/tsuru/tsuru.conf
