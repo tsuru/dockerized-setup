@@ -12,4 +12,4 @@ VOLUME /data/archive-server
 ADD ./run.sh /run.sh
 RUN chmod +x /run.sh
 
-ENTRYPOINT /run.sh
+ENTRYPOINT ["/run.sh"]
