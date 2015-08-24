@@ -1,5 +1,3 @@
-#!/bin/bash
-
 READ_HTTP=0.0.0.0:3032
 WRITE_HTTP=0.0.0.0:3031
 ARCHIVE_DIR=/data/archive-server/archives
