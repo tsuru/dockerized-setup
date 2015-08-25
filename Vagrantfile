@@ -8,8 +8,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.box = "puppetlabs/ubuntu-14.04-64-puppet"
 
-  # config.vm.provision "shell",
-  #   inline: "wget -qO- https://get.docker.com/ | sh ; sudo usermod -aG docker vagrant"
+  config.vm.provision "shell",
+    inline: "wget -qO- https://get.docker.com/ | sh ; sudo usermod -aG docker vagrant"
   # Allow Mac OS X docker client to connect to Docker without TLS auth
   config.vm.provision "shell",
     inline: "sudo bash -c \'echo \"DOCKER_TLS=no\" > /etc/default/docker\'"
