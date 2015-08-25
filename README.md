@@ -62,7 +62,7 @@
   ```bash
   $ docker run -d \
     --name mongo \
-    -e SERVICE_NAME="mongo"
+    -e SERVICE_NAME="mongo" \
     --restart=always \
     -p 27017:27017 \
     mongo
@@ -265,7 +265,7 @@
   $ eval "$(docker-machine env docker01)"
   $ docker run -d \
     --name mongo \
-    -e SERVICE_NAME="mongo"
+    -e SERVICE_NAME="mongo" \
     --restart=always \
     -p 27017:27017 \
     mongo --replSet rStsuru
@@ -273,7 +273,7 @@
   $ eval "$(docker-machine env docker02)"
   $ $ docker run -d \
     --name mongo \
-    -e SERVICE_NAME="mongo"
+    -e SERVICE_NAME="mongo" \
     --restart=always \
     -p 27017:27017 \
     mongo --replSet rStsuru
@@ -281,7 +281,7 @@
   $ eval "$(docker-machine env docker03)"
   $ $ docker run -d \
     --name mongo \
-    -e SERVICE_NAME="mongo"
+    -e SERVICE_NAME="mongo" \
     --restart=always \
     -p 27017:27017 \
     mongo --replSet rStsuru
