@@ -1,5 +1,5 @@
 listen: {{if key "tsuru/listen"}}"{{key "tsuru/listen"}}"{{else}}"0.0.0.0:8000"{{end}}
-host: {{if key "tsuru/host"}}"{{key "tsuru/host"}}"{{else}}"tsuru.example.com:8000"{{end}}
+host: {{if key "tsuru/host"}}"{{key "tsuru/host"}}"{{else}}"tsuru-api.service.consul:8000"{{end}}
 debug: {{if key "tsuru/debug"}}{{key "tsuru/debug"}}{{else}}false{{end}}
 disable-index-page: {{if key "tsuru/disable-index-page"}}{{key "tsuru/disable-index-page"}}{{else}}false{{end}}
 admin-team: {{if key "tsuru/admin-team"}}{{key "tsuru/admin-team"}}{{else}}admin{{end}}
