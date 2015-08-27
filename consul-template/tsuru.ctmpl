@@ -1,5 +1,5 @@
 listen: {{if key "tsuru/listen"}}"{{key "tsuru/listen"}}"{{else}}"0.0.0.0:8000"{{end}}
-host: {{if key "tsuru/host"}}"{{key "tsuru/host"}}"{{else}}"tsuru-api.service.consul:8000"{{end}}
+host: {{if key "tsuru/host"}}"{{key "tsuru/host"}}"{{else}}"http://tsuru-api.service.consul:8000"{{end}}
 debug: {{if key "tsuru/debug"}}{{key "tsuru/debug"}}{{else}}false{{end}}
 disable-index-page: {{if key "tsuru/disable-index-page"}}{{key "tsuru/disable-index-page"}}{{else}}false{{end}}
 admin-team: {{if key "tsuru/admin-team"}}{{key "tsuru/admin-team"}}{{else}}admin{{end}}
@@ -25,7 +25,7 @@ smtp:
 {{if service "gandalf"}}repo-manager: gandalf{{else}}repo-manager: none{{end}}
 git:
   unit-repo: {{if key "tsuru/git/unit-repo"}}{{key "tsuru/git/unit-repo"}}{{else}}/home/application/current{{end}}
-  api-server: {{if key "tsuru/git/api-server"}}{{key "tsuru/git/api-server"}}{{else}}gandalf.service.consul{{end}}
+  api-server: {{if key "tsuru/git/api-server"}}{{key "tsuru/git/api-server"}}{{else}}http://gandalf.service.consul:8001{{end}}
 
 log:
   file: {{if key "tsuru/log/file"}}{{key "tsuru/log/file"}}{{else}}/var/log/tsuru.log{{end}}
