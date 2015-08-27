@@ -13,7 +13,6 @@ ADD ./tsuru.ctmpl /tmp/tsuru.ctmpl
 ADD ./redis.ctmpl /tmp/redis.ctmpl
 ADD ./hipache.ctmpl /tmp/hipache.ctmpl
 ADD ./gandalf.ctmpl /tmp/gandalf.ctmpl
-ADD ./post-receive.ctmpl /tmp/post-receive.ctmpl
 ADD ./pre-receive.ctmpl /tmp/pre-receive.ctmpl
 ADD ./archive-server.ctmpl /tmp/archive-server.ctmpl
 
