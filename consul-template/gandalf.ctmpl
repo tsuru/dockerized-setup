@@ -4,6 +4,8 @@ log:
   file: /var/log/gandalf.log
   disable-syslog: true
 
+authorized-keys-path: /home/git/.ssh/authorized_keys
+
 # MongoDB connection settings. By default, Gandalf will connect on localhost
 # using the "gandalf" database. Uncomment and change to customize.
 #
@@ -17,12 +19,15 @@ database:
 # page.
 git:
   bare:
-    location: /data/gandalf
-    template: /data/gandalf
+    location: /data/gandalf/repositories
+    template: /data/gandalf/template
+  ssh:
+    use: true
+    port: 2222
 
 # Host is the host used to build repositories URL. If you want Gandalf to be
 # accessible from other hosts, you need to change this option.
-host: git.crayonstock.com
+host: {{if key "tsuru/git/rw-host"}}{{key "tsuru/git/rw-host"}}{{else}}gandalf.service.consul{{end}}
 
 # Address that the Gandalf API server will bind.
 bind: 0.0.0.0:8001
