@@ -8,8 +8,8 @@
 
 GIT_DAEMON_ENABLE=false
 GIT_DAEMON_USER=gitdaemon
-GIT_DAEMON_BASE_PATH=/var/lib
-GIT_DAEMON_DIRECTORY=/var/lib/git
+GIT_DAEMON_BASE_PATH=/data/gandalf/repositories
+GIT_DAEMON_DIRECTORY=/data/gandalf/repositories
 
 # Additional options that are passed to the Daemon.
 GIT_DAEMON_OPTIONS=""
