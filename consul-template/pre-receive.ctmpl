@@ -17,8 +17,8 @@
 
 TSURU_HOST={{if key "tsuru/host"}}"{{key "tsuru/host"}}"{{else}}"http://tsuru-api.service.consul:8000"{{end}}
 TSURU_TOKEN={{key "tsuru/token"}}
-ARCHIVE_SERVER_WRITE={{if key "archive-server/archive_server_write"}}"{{key "archive-server/archive_server_write"}}"{{else}}"http://archive-server.service.consul:3032"{{end}}
-ARCHIVE_SERVER_READ={{if key "archive-server/archive_server_read"}}"{{key "archive-server/archive_server_read"}}"{{else}}"http://archive-server.service.consul:3031"{{end}}
+ARCHIVE_SERVER_WRITE={{if key "archive-server/archive_server_write"}}"{{key "archive-server/archive_server_write"}}"{{else}}"http://archive-server.service.consul:3031"{{end}}
+ARCHIVE_SERVER_READ={{if key "archive-server/archive_server_read"}}"{{key "archive-server/archive_server_read"}}"{{else}}"http://archive-server.service.consul:3032"{{end}}
 
 while read oldrev newrev refname
 do
