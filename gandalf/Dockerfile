@@ -9,6 +9,9 @@ ADD ./git-daemon /etc/default/git-daemon
 ADD ./run.sh /run.sh
 RUN chmod +x /run.sh
 RUN mkdir /var/run/sshd
+RUN rm -f /etc/gandalf.conf
+RUN ln -s /data/gandalf/gandalf.conf /etc/gandalf.conf
+
 
 ADD https://get.docker.com/builds/Linux/x86_64/docker-latest /bin/docker
 RUN chmod +x /bin/docker
