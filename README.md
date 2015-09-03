@@ -113,6 +113,7 @@
     -p 3031:3031 \
     -p 3032:3032 \
     -v /data/archive-server:/data/archive-server \
+    -v /data/gandalf:/data/gandalf \
     tsuru/archive-server
   ```
 ### Gandalf
