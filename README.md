@@ -112,6 +112,7 @@
     --restart=always \
     -p 3031:3031 \
     -p 3032:3032 \
+    -v /data/gandalf:/data/gandalf \
     -v /data/archive-server:/data/archive-server \
     tsuru/archive-server
   ```
