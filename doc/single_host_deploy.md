@@ -1,8 +1,6 @@
 # Single host deploy
 
-
 ![alt tag](https://docs.google.com/drawings/d/1H2trUJi8FgIMM6NT9orFjv8NEZlTFEWQrCcK48OTLvc/pub?w=1440&amp;h=1080)
-
 
 ## Install machine
   ```bash
@@ -10,6 +8,7 @@
     --engine-opt dns=172.17.42.1 \
     --engine-opt dns=8.8.8.8 \
     --engine-opt dns-search=service.consul \
+    --engine-opt tlsverify=false \
     -d virtualbox docker01
   ```
 
