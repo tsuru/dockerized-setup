@@ -28,7 +28,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
-  config.vm.define :dockerNode do |node|
+  config.vm.define :dockerNode01 do |node|
     node.vm.hostname = 'dockerNode'
     node.vm.network "private_network", ip: "192.168.33.11"
 
@@ -38,5 +38,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
+  config.vm.define :dockerNode02 do |node|
+    node.vm.hostname = 'dockerNode'
+    node.vm.network "private_network", ip: "192.168.33.12"
+
+    node.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "1024"]
+      vb.customize ["modifyvm", :id, "--cpus", "2"]
+    end
+  end
 
 end

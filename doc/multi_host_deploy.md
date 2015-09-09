@@ -329,3 +329,13 @@
     -v /var/run/docker.sock:/tmp/docker.sock \
     tsuru/gandalf
   ```
+### Application Node
+
+  Now tsuru doesn't support TLS authentication, for now is simpler use a vagrant VM
+
+  ```bash
+  $ git clone https://github.com/tsuru/dockerized-setup.git
+  $ cd dockerized-setup
+  $ vagrant up dockerNode01
+  $ vagrant up dockerNode02
+  ```
