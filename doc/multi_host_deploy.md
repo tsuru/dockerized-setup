@@ -167,7 +167,7 @@
   $ docker exec mongo mongo --eval "JSON.stringify(rs.add('`docker-machine ip docker01`:27017'))"
   $ docker exec mongo mongo --eval "JSON.stringify(rs.add('`docker-machine ip docker02`:27017'))"
   ```
-### Redis (TODO - support redis cluster to implement HA)
+### Redis (TODO - support redis cluster to implement HA - [issue #1272](https://github.com/tsuru/tsuru/issues/1272))
   ```bash
   $ eval "$(docker-machine env docker01)"
   $ docker run -d \
