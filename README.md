@@ -10,3 +10,4 @@ TODO:
 * create image for haproxy
 * support tls in docker nodes - [issue #1234](https://github.com/tsuru/tsuru/issues/1234)
 * support redis cluster - [issue #1272](https://github.com/tsuru/tsuru/issues/1272)
+* install and configure tsurud with tsuru client
