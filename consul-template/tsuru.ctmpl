@@ -86,7 +86,7 @@ routers:{{range ls "tsuru/routers"}}
   {{.Value}}{{else}}
   hipache:
     type: hipache
-    domain: router-hipache.service.consul
+    domain: {{ if key "hipache/domain" }}{{ key "hipache/domain" }}{{ else }}router-hipache.service.consul{{ end }}
     redis-server: redis.service.consul:6379{{end}}
 
 {{if key "tsuru/iaas/default"}}
