@@ -10,10 +10,10 @@ if [ "$TSURU_TOKEN" == "" ]; then
   /bin/docker run -v /data/tsuru:/data/tsuru tsuru/tsuru-api gandalf-sync --config=/data/tsuru/tsuru.conf
   /usr/sbin/sshd -D &
   /usr/sbin/rsyslogd &
-  /usr/bin/gandalf-server -config=/data/gandalf/gandalf.conf
+  su - git -c "/usr/bin/gandalf-server -config=/data/gandalf/gandalf.conf"
 else
   /bin/docker run -v /data/tsuru:/data/tsuru tsuru/tsuru-api gandalf-sync --config=/data/tsuru/tsuru.conf
   /usr/sbin/sshd -D &
   /usr/sbin/rsyslogd &
-  /usr/bin/gandalf-server -config=/data/gandalf/gandalf.conf
+  su - git -c "/usr/bin/gandalf-server -config=/data/gandalf/gandalf.conf"
 fi
