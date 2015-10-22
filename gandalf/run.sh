@@ -2,6 +2,7 @@
 
 TSURU_TOKEN=`curl -s http://consul.service.consul:8500/v1/kv/tsuru/token?raw`
 
+mkdir -p /data/gandalf/log
 chown -R git:git /data/gandalf
 
 if [ "$TSURU_TOKEN" == "" ]; then
