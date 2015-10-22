@@ -8,8 +8,6 @@ RUN apt-get install -y node-hipache redis-server patch
 
 EXPOSE      8080
 
-VOLUME /data/router
-
 ADD ./run.sh /bin/run.sh
 RUN chmod +x /bin/run.sh
 

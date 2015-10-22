@@ -11,8 +11,6 @@ ADD ./tsuru-defaults /etc/default/tsuru-server
 RUN touch /var/log/tsuru.log
 RUN chown tsuru:tsuru /var/log/tsuru.log
 
-VOLUME /data/tsuru
-
 LABEL name="tsuru-api"
 
 ENTRYPOINT ["/usr/bin/tsurud"]
