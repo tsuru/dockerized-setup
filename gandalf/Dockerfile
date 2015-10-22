@@ -22,6 +22,4 @@ EXPOSE      8001
 
 LABEL name="gandalf"
 
-RUN chown -R git:git /data/gandalf
-
 ENTRYPOINT /run.sh
