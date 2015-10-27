@@ -1,8 +1,9 @@
 FROM ubuntu:14.04
 
 MAINTAINER tsuru <tsuru@corp.globo.com>
-ADD https://github.com/hashicorp/consul-template/releases/download/v0.10.0/consul-template_0.10.0_linux_amd64.tar.gz /tmp/
-RUN tar -zxf /tmp/consul-template_0.10.0_linux_amd64.tar.gz -C /bin/ --strip-components=1 && rm -rf /tmp/consul-template_0.10.0_linux_amd64.tar.gz
+ADD https://github.com/hashicorp/consul-template/releases/download/v0.11.0/consul_template_0.11.0_linux_amd64.zip /tmp/
+RUN apt-get install -y unzip
+RUN unzip /tmp/consul_template_0.11.0_linux_amd64.zip -d /bin && rm -rf /tmp/consul-template_0.11.0_linux_amd64.tar.gz
 
 ADD https://get.docker.com/builds/Linux/x86_64/docker-latest /bin/docker
 RUN chmod +x /bin/docker
