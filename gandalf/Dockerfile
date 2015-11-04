@@ -20,10 +20,6 @@ ENV DOCKER_HOST unix:///tmp/docker.sock
 
 EXPOSE      8001
 
-VOLUME /data/gandalf
-
 LABEL name="gandalf"
-
-RUN chown -R git:git /data/gandalf
 
 ENTRYPOINT /run.sh

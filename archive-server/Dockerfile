@@ -7,8 +7,6 @@ RUN apt-get update && apt-get install -y archive-server patch git
 
 EXPOSE      3031 3032
 
-VOLUME /data/archive-server
-
 ADD ./run.sh /run.sh
 RUN chmod +x /run.sh
 

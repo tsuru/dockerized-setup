@@ -6,9 +6,9 @@ RUN echo "deb http://ppa.launchpad.net/tsuru/ppa/ubuntu trusty main"  > /etc/apt
 RUN apt-get update
 RUN apt-get install -y node-hipache redis-server patch
 
-EXPOSE      8080
+RUN echo DAEMON_ARGS=/data/router/redis.conf > /etc/default/redis-server
 
-VOLUME /data/router
+EXPOSE      8080
 
 ADD ./run.sh /bin/run.sh
 RUN chmod +x /bin/run.sh
