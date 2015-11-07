@@ -22,4 +22,4 @@ EXPOSE      8001
 
 LABEL name="gandalf"
 
-ENTRYPOINT /run.sh
+ENTRYPOINT ["/run.sh"]
