@@ -54,7 +54,7 @@
     -v /data/router:/data/router \
     -v /data/gandalf:/data/gandalf \
     -v /data/archive-server:/data/archive-server \
-    tsuru/consul-template
+    tsuru/consul-template -consul `docker-machine ip docker01`:8500
   ```
 
 ## Start tsuru
