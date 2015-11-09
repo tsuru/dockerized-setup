@@ -13,4 +13,4 @@ EXPOSE      8080
 ADD ./run.sh /bin/run.sh
 RUN chmod +x /bin/run.sh
 
-ENTRYPOINT /bin/run.sh
+ENTRYPOINT ["/bin/run.sh"]

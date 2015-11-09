@@ -20,4 +20,4 @@ ENV DOCKER_HOST unix:///tmp/docker.sock
 
 LABEL "name"="consul-template"
 
-ENTRYPOINT /bin/consul-template -config /etc/consul-template.conf
+ENTRYPOINT ["/bin/consul-template", "-config", "/etc/consul-template.conf"]
