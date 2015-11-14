@@ -9,6 +9,7 @@ ADD ./git-daemon /etc/default/git-daemon
 ADD ./run.sh /run.sh
 RUN chmod +x /run.sh
 RUN mkdir /var/run/sshd
+RUN echo AuthorizedKeysFile /data/gandalf/ssh/authorized_keys >> /etc/ssh/sshd_config
 RUN rm -f /etc/gandalf.conf
 RUN ln -s /data/gandalf/gandalf.conf /etc/gandalf.conf
 
