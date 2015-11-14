@@ -28,10 +28,8 @@ git:
   api-server: {{if key "tsuru/git/api-server"}}{{key "tsuru/git/api-server"}}{{else}}http://gandalf.service.consul:8001{{end}}
 
 log:
-  file: {{if key "tsuru/log/file"}}{{key "tsuru/log/file"}}{{else}}/var/log/tsuru.log{{end}}
-  disable-syslog: {{if key "tsuru/log/disable-syslog"}}{{key "tsuru/log/disable-syslog"}}{{else}}true{{end}}
-  syslog-tag: {{if key "tsuru/log/syslog-tag"}}{{key "tsuru/log/syslog-tag"}}{{else}}tsr{{end}}
-  use-stderr: {{if key "tsuru/log/use-stderr"}}{{key "tsuru/log/use-stderr"}}{{else}}false{{end}}
+  disable-syslog: true
+  use-stderr: true
 
 auth:
   scheme: {{if key "tsuru/auth/scheme"}}{{key "tsuru/auth/scheme"}}{{else}}native{{end}}
