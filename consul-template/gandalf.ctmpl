@@ -4,7 +4,7 @@ log:
   file: /data/gandalf/log/gandalf.log
   disable-syslog: true
 
-authorized-keys-path: /home/git/.ssh/authorized_keys
+authorized-keys-path: /data/gandalf/ssh/authorized_keys
 
 # MongoDB connection settings. By default, Gandalf will connect on localhost
 # using the "gandalf" database. Uncomment and change to customize.
