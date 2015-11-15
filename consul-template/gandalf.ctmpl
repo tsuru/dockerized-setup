@@ -1,8 +1,8 @@
 bin-path: /usr/bin/gandalf-ssh
 
 log:
-  file: /data/gandalf/log/gandalf.log
   disable-syslog: true
+  use-stderr: true
 
 authorized-keys-path: /data/gandalf/ssh/authorized_keys
 
