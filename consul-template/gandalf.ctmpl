@@ -4,6 +4,8 @@ log:
   disable-syslog: true
   use-stderr: true
 
+debug: {{if key "gandalf/debug"}}{{key "gandalf/debug"}}{{else}}false{{end}}
+
 authorized-keys-path: /data/gandalf/ssh/authorized_keys
 
 # MongoDB connection settings. By default, Gandalf will connect on localhost
