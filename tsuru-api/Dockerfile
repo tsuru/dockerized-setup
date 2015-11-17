@@ -8,8 +8,6 @@ RUN apt-get update && apt-get install -y tsuru-server patch
 EXPOSE      8000
 
 COPY ./tsuru-defaults /etc/default/tsuru-server
-RUN touch /var/log/tsuru.log
-RUN chown tsuru:tsuru /var/log/tsuru.log
 
 LABEL name="tsuru-api"
 
