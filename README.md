@@ -1,4 +1,4 @@
-# Under construction (now is only a POC)
+# DEPRECATED - this project was an experiment and should not be used
 
 Single host deploy example [here](doc/single_host_deploy.md)
 
